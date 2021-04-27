@@ -18,7 +18,7 @@ app.secret_key = b'\xe8s\xb9\x0e\xddZ \xc3\x80\xa5\x1a\x11\x99J\xe7V'
 mydb = mysql.connector.connect(
     host="127.0.0.1",
     username="root",
-    password="!nctu820228",
+    password="!Anctu820228",
     database="travel_site"
 )
 
@@ -115,7 +115,7 @@ def attraction_page():
 				
 			detail = {'id':id, 'name':name, 'category':category, 'description':description, 'address':address, 'transport':transport, 'mar':mrt, 'latitude':latitude, 'longitude':longitude, 'images':images}
 			page_list.append(detail)
-			
+
 		if page_id > total_page-1:
 			dic["nextPage"] = "null"
 		else:
@@ -164,4 +164,10 @@ def booking():
 def thankyou():
 	return render_template("thankyou.html")
 
-app.run(port=3000)
+
+# try 
+
+# except Exception as e:
+# 	print(e)
+
+app.run(host="0.0.0.0",port=3000)
