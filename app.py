@@ -32,90 +32,100 @@ def index():
 
 @app.route("/api/attractions/")
 def attraction_page():
-	page_id = request.args.get("page", None)
-	print(page_id)
-	# print(type(page_id))
-	page_id = int(page_id)
-	# print(type(page_id))
 
-	dic = {}
-	page_id_range = (page_id-1)*12
-	print(page_id)
+	keyword = request.args.get("keyword", None)
+	print(keyword)
+	if keyword is None:
 
-	mycursor.execute(f"SELECT * FROM spot order by id limit 12 offset {page_id_range}")
-	page_result = mycursor.fetchall()
-	print(page_result)
-	# print(type(page_result[0]))
-	page_list = []
-	for i in range(len(page_result)):
-		id = page_result[i][0]
-		name = page_result[i][1]
-		category = page_result[i][2]
-		description = page_result[i][3]
-		address = page_result[i][4]
-		transport = page_result[i][5]
-		mrt = page_result[i][6]
-		latitude = page_result[i][7]
-		longitude = page_result[i][8]
-		images = page_result[i][9]
-		images = images.split(",")
-		images.pop()
+		page_id = request.args.get("page", None)
+		page_id = int(page_id)
+		page_id += 1
+
+		dic = {}
+		page_id_range = (page_id-1)*12
+
+		mycursor.execute(f"SELECT count(*) FROM spot ")
+		number = mycursor.fetchone()
+		total_result = number[0]
+		total_page = total_result//12
+		if total_result%12 > 0:
+			total_page += 1
+
+		mycursor.execute(f"SELECT * FROM spot order by id limit 12 offset {page_id_range}")
+		page_result = mycursor.fetchall()
+		
+		page_list = []
+		for i in range(len(page_result)):
+			id = page_result[i][0]
+			name = page_result[i][1]
+			category = page_result[i][2]
+			description = page_result[i][3]
+			address = page_result[i][4]
+			transport = page_result[i][5]
+			mrt = page_result[i][6]
+			latitude = page_result[i][7]
+			longitude = page_result[i][8]
+			images = page_result[i][9]
+			images = images.split(",")
+			images.pop()
+				
+			detail = {'id':id, 'name':name, 'category':category, 'description':description, 'address':address, 'transport':transport, 'mrt':mrt, 'latitude':latitude, 'longitude':longitude, 'images':images}
+			page_list.append(detail)
+
+		if page_id >= (total_page-1):
+			dic["nextPage"] = "null"
+		else:
+			dic["nextPage"] = (page_id)
+		dic["data"] = page_list
+
+		return json.dumps(dic, ensure_ascii=False),200
+
+	else:			
+		page_id = request.args.get("page", None)
+		page_id = int(page_id)
+		page_id += 1
+
+		dic = {}
+		page_id_range = (page_id-1)*12
+	
+		mycursor.execute(f"SELECT count(*) FROM spot where name like '%{keyword}%' ")
+		number = mycursor.fetchone()
+		total_result = number[0]
+		total_page = total_result//12
+		if total_result%12 > 0:
+			total_page += 1
+
+		mycursor.execute(f"SELECT * FROM spot where name like '%{keyword}%' order by id limit 12 offset {page_id_range} ")
+		page_result = mycursor.fetchall()
+
+		page_list = []
+		for i in range(len(page_result)):
+			id = page_result[i][0]
+			name = page_result[i][1]
+			category = page_result[i][2]
+			description = page_result[i][3]
+			address = page_result[i][4]
+			transport = page_result[i][5]
+			mrt = page_result[i][6]
+			latitude = page_result[i][7]
+			longitude = page_result[i][8]
+			images = page_result[i][9]
+			images = images.split(",")
+			images.pop()
+				
+			detail = {'id':id, 'name':name, 'category':category, 'description':description, 'address':address, 'transport':transport, 'mar':mrt, 'latitude':latitude, 'longitude':longitude, 'images':images}
+			page_list.append(detail)
 			
-		detail = {'id':id, 'name':name, 'category':category, 'description':description, 'address':address, 'transport':transport, 'mar':mrt, 'latitude':latitude, 'longitude':longitude, 'images':images}
-		page_list.append(detail)
-	if page_id > 26:
-		dic["nextPage"] = "null"
-	else:
-		dic["nextPage"] = (page_id + 1)
-	dic["data"] = page_list
+		if page_id > total_page-1:
+			dic["nextPage"] = "null"
+		else:
+			dic["nextPage"] = (page_id)
+		dic["data"] = page_list
 
-	return json.dumps(dic, ensure_ascii=False),200
-
-
-# @app.route("/api/attractions/")
-# def attraction_keyword():
-# 	keyword = request.args.get("keyword", None)
-# 	print(keyword)
-
-# 	dic = {}
-# 	page_id_range = (page_id-1)*12
-# 	print(page_id)
-
-# 	mycursor.execute(f"SELECT * FROM spot )
-# 	key_result = mycursor.fetchall()
-# 	print(page_result)
-# 	# print(type(page_result[0]))
-# 	page_list = []
-# 	for i in range(len(page_result)):
-# 		id = page_result[i][0]
-# 		name = page_result[i][1]
-# 		category = page_result[i][2]
-# 		description = page_result[i][3]
-# 		address = page_result[i][4]
-# 		transport = page_result[i][5]
-# 		mrt = page_result[i][6]
-# 		latitude = page_result[i][7]
-# 		longitude = page_result[i][8]
-# 		images = page_result[i][9]
-# 		images = images.split(",")
-# 		images.pop()
-			
-# 		detail = {'id':id, 'name':name, 'category':category, 'description':description, 'address':address, 'transport':transport, 'mar':mrt, 'latitude':latitude, 'longitude':longitude, 'images':images}
-# 		page_list.append(detail)
-# 	if page_id > 26:
-# 		dic["nextPage"] = "null"
-# 	else:
-# 		dic["nextPage"] = (page_id + 1)
-# 	dic["data"] = page_list
-
-# 	return json.dumps(dic, ensure_ascii=False)
-
-
+		return json.dumps(dic, ensure_ascii=False),200
 
 @app.route("/api/attractions/<id>")
 def attraction_id(id):
-
-	# mycursor.execute(f"SELECT * FROM spot ")
 
 	mycursor.execute(f"SELECT * FROM spot where id = {id}")
 	result = mycursor.fetchone()
@@ -124,8 +134,7 @@ def attraction_id(id):
 	if result is None:
 		dic["data"] = {'error': 'true', 'message':'景點編號不正確'}
 		return json.dumps(dic, ensure_ascii=False),400
-	else:
-			
+	else:		
 		name = result[1]
 		category = result[2]
 		description = result[3]
@@ -138,7 +147,6 @@ def attraction_id(id):
 		images = images.split(",")
 		images.pop()
 		
-		print(images)
 		dic["data"] = {'id':id, 'name':name, 'category':category, 'description':description, 'address':address, 'transport':transport, 'mar':mrt, 'latitude':latitude, 'longitude':longitude, 'images':images}
 		return json.dumps(dic, ensure_ascii=False),200
 
