@@ -43,7 +43,7 @@ def main():
         website = ''
         for web in images:
             # print(type(web))
-                print(web)
+                # print(web)
                 if ".jpg" in web:  
                     website = website + "http" + web + ","
                 

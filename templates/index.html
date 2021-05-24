@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="../static/color_size.css" media="all"/>
+    <link rel="stylesheet" type="text/css" href="../static/index.css" media="all"/>
+    <meta charset = "utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <title></title>
+
+<style>
+
+    .bigbox {
+        width:1200px;
+        display:flex;
+        flex-wrap: wrap;
+        /* border:solid red 1px; */
+        text-align:center ;
+
+    }
+
+    
+
+
+</style>
+
+</head>
+
+<body>
+    <div class = "nav1">
+        <div class = "div1">
+            <span class = "title1">台北一日遊</span>
+            <span class = "title2">    
+                <button class = "button1">預定行程</button>
+                <button class = "button1">登入/註冊</button>
+            </span>
+        </div>
+    </div>
+    <div class = "head">
+        <span class = "text1">輕鬆享受台北一日悠閒</span>
+        <span class = "text2">探索每個角落，體驗城市的深度體驗城市的深度旅遊行程</span>
+        <input type="text" class = "input1" placeholder="輸入景點名稱查詢" id = "inputkeyword"> </input>
+        <button id = "search" class = "button2 Cyan800" ><img src="../static/icon_search.png"> </button>
+        <!-- <button id = "search">查詢</button> -->
+        <img class = "welcome1" src= "../static/welcome 1.png"></img>
+    
+    </div>
+    
+    <main id = "content">
+        
+    </main>
+    <footer class = "footer" background = "Gray700"> COPYRIGHT©2021台北一日遊</footer>
+    
+<script>
+
+    var currentPage = 0;
+    let result;
+    let data;
+    let bigbox;
+    let box;
+    let windowHeight;
+    var key_word = null;
+   
+
+    bigbox = document.createElement("div");
+    bigbox.className = "bigbox";
+    bigbox.id = "bigbox";
+   
+    
+    function researchData(key_word){
+        let src = "http://0.0.0.0:3000/api/attractions?page="+currentPage;
+        if (key_word !== null){
+            src="http://0.0.0.0:3000/api/attractions?page="+currentPage+"&keyword="+key_word;
+        }
+        else{
+
+        }
+        fetch(src).then(function(response)
+        
+        {   console.log(src);
+            console.log(response);
+            return response.json();
+        }
+        ).then(function(result)
+        {
+        console.log("cheerup");
+        getData(result);
+        nextPage = result.nextPage;
+        currentPage = nextPage;
+        
+        // windowHeight = bigbox.getBoundingClientRect().bottom;
+        // console.log(windowHeight);
+        // console.log(document.body.clientHeight);
+        // console.log(document.body.scrollHeight);
+        // console.log(document.body.scrollTop);
+        // console.log(window.scrollY);
+        // console.log(document.documentElement.scrollHeight);
+        // console.log(window.innerHeight);
+        });
+    }
+
+    researchData(key_word);
+
+
+    window.addEventListener ('scroll', function()
+    {
+  
+    if (window.scrollY*3 > (document.documentElement.scrollHeight)){
+        // console.log("happy");
+        researchData(key_word);
+    }
+    });
+
+    var btn = document.getElementById("search");
+    console.log(btn);
+
+    btn.addEventListener('click', function()
+    {
+    var clear = document.getElementById("bigbox").innerHTML = "";
+    key_word = document.getElementById("inputkeyword").value;
+    currentPage = 0;    
+    researchData(key_word);
+    // document.body.appendChild(content);
+    });
+
+
+    function getData(result){
+        
+
+        var datalength = result.data.length;
+        console.log(datalength);
+        for(let i = 0; i<datalength; i++){ 
+        
+        console.log(result.data[i]);
+        let number = result.data[i].id;
+        let title = result.data[i].name;
+        // title = number + title;
+        let mrt = result.data[i].mrt;
+        let type = result.data[i].category;
+        let web = result.data[i].images[0];
+        
+        box = document.createElement("div");
+        box.className = "box";
+
+        bigbox.appendChild(box);
+
+        var photobox = document.createElement("img");
+        photobox.src = web
+        photobox.className = "photobox";
+
+        box.appendChild(photobox);
+
+        var titlebox = document.createElement("div");
+        titlebox.classList.add('titlebox');
+
+        box.appendChild(titlebox);
+
+        var titlename = document.createElement("div");
+        titlename.className = "titlename";
+        titlename.innerText = title;
+
+        titlebox.appendChild(titlename);
+
+        var titlename2 = document.createElement("div");
+        titlename2.className = "titlename2";
+
+        titlebox.appendChild(titlename2);
+
+        var mrtname = document.createElement("span");
+        mrtname.className = "mrtname";
+        mrtname.innerText = mrt;
+
+        var typename = document.createElement("span");
+        typename.className = "typename";
+        typename.innerText = type;
+
+        titlename2.appendChild(mrtname);
+        titlename2.appendChild(typename);
+
+    };
+    var content = document.getElementById("content").appendChild(bigbox);
+    }
+
+    
+</script>
+
+
+</body>
+
+</html>
+
