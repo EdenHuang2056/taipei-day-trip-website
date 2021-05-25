@@ -67,19 +67,18 @@
    
     
     function researchData(key_word){
-        let src = "http://50.18.127.34/:3000/api/attractions?page="+currentPage;
+        let src = "http://0.0.0.0:3000/api/attractions?page="+currentPage;
         if (key_word !== null){
-            src="http://50.18.127.34/:3000/api/attractions?page="+currentPage+"&keyword="+key_word;
+            src="http://0.0.0.0:3000/api/attractions?page="+currentPage+"&keyword="+key_word;
         }
-        
         fetch(src).then(function(response)
-        
         {   
+            // console.log(response);
+            // console.log(src);
             return response.json();
         }
         ).then(function(result)
         {
-        console.log("cheerup");
         getData(result);
         nextPage = result.nextPage;
         currentPage = nextPage;
@@ -128,10 +127,10 @@
         if(datalength==0){
             document.getElementById("bigbox").innerHTML = "查無景點資料";
         }
-
+        else{
         for(let i = 0; i<datalength; i++){ 
         
-        console.log(result.data[i]);
+        // console.log(result.data[i]);
         let number = result.data[i].id;
         let title = result.data[i].name;
         // title = number + title;
@@ -180,7 +179,7 @@
     };
     var content = document.getElementById("content").appendChild(bigbox);
     }
-
+    }
     
 </script>
 
