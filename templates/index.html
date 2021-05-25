@@ -67,17 +67,14 @@
    
     
     function researchData(key_word){
-        let src = "http://50.18.127.34:3000/api/attractions?page="+currentPage;
+        let src = "http://50.18.127.34/:3000/api/attractions?page="+currentPage;
         if (key_word !== null){
-            src="http://50.18.127.34:3000/api/attractions?page="+currentPage+"&keyword="+key_word;
+            src="http://50.18.127.34/:3000/api/attractions?page="+currentPage+"&keyword="+key_word;
         }
-        else{
-
-        }
+        
         fetch(src).then(function(response)
         
-        {   console.log(src);
-            console.log(response);
+        {   
             return response.json();
         }
         ).then(function(result)
@@ -105,7 +102,6 @@
     {
   
     if (window.scrollY*3 > (document.documentElement.scrollHeight)){
-        // console.log("happy");
         researchData(key_word);
     }
     });
@@ -130,7 +126,7 @@
         console.log(datalength);
 
         if(datalength==0){
-            document.getElementById("bigbox").innerHTML = "無資料";
+            document.getElementById("bigbox").innerHTML = "查無景點資料";
         }
 
         for(let i = 0; i<datalength; i++){ 

@@ -35,7 +35,7 @@ body{
 
 .head{
     max-width: 1920px; height: 320px;
-    margin: auto;
+    margin: auto;position: relative;
     background:linear-gradient(135deg, #AADDEE 0%, #66AABB 100%);;
 
 }
@@ -64,7 +64,9 @@ body{
 }
 
 .welcome1{
-    margin-left:55%
+    width:450px;
+    margin-left:55%;
+    position:absolute; left:100px; top:100px;
 }
 
 main{
@@ -107,13 +109,13 @@ main{
     position: relative;
 }
 
-.titlebox{
+/* .titlebox{ */
     /* display:flex;flex-wrap: wrap; */
     /* max-width: 270px; */
     /* position:absolute; top:100px; */
     /* border:solid black 1px; */
 
-}
+/* } */
 
 .titlename{
     /* display: block; */
@@ -150,7 +152,7 @@ main{
     align-items: center;
 }
 
-@media(max-width:360px){
+@media(min-width:360px) and (max-width:500px){
 
     .title1{
         font-size: 20px;
@@ -197,7 +199,11 @@ main{
         position: absolute; top:170px; left:140px ;
     }
 
+  
+
 }
+
+
 
 
 
