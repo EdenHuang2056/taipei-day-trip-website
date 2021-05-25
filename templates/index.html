@@ -128,6 +128,11 @@
 
         var datalength = result.data.length;
         console.log(datalength);
+
+        if(datalength==0){
+            document.getElementById("bigbox").innerHTML = "無資料";
+        }
+
         for(let i = 0; i<datalength; i++){ 
         
         console.log(result.data[i]);
