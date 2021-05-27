@@ -1,0 +1,92 @@
+
+
+.Bold{
+
+    font-weight: bold !important;
+}
+
+.H2{
+    font-family: Work Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 40px;
+    line-height: 47px;
+}
+
+.Header1 {
+    font-family: Noto Sans TC;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 28px;
+    line-height: 24px;
+}
+
+.Header2 {
+    font-family: Noto Sans TC;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 30px;
+    line-height: 34px;
+}
+
+.Header3{
+    font-family: Noto Sans TC;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 24px;
+}
+
+.Button{
+    font-family: Noto Sans TC;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 19px;
+    line-height: 16px;
+}
+
+.Content{
+    font-family: Noto Sans TC;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 23px;
+}
+
+.Body{
+    font-family: Noto Sans TC;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 13px;
+}
+
+.Cyan800{
+    background: #448899;
+}
+
+.Cyan700{
+    background: #66AABB;
+}
+
+.Cyan100{
+    background: #AADDEE;
+}
+
+.Gray800{
+    background: #666666;
+}
+
+.Gray700{
+    background: #757575;
+}
+
+.Gray300{
+    background: #E8E8E8;
+}
+
+.Gray50{
+    background: #F8F8F8;
+}
+
+

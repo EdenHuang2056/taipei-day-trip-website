@@ -30,11 +30,52 @@ mycursor = mydb.cursor()
 def index():
 	return render_template("index.html")
 
-@app.route("/api/attractions/")
+@app.route("/attraction/<id>")
+def attraction(id):
+	return render_template("attraction.html")
+
+@app.route("/booking")
+def booking():
+	return render_template("booking.html")
+
+@app.route("/thankyou")
+def thankyou():
+	return render_template("thankyou.html")
+	
+@app.route("/api/attraction/<id>")
+def attraction_id(id):
+
+	
+	mycursor.execute(f"SELECT * FROM spot where id = {id}")
+	result = mycursor.fetchone()
+	dic = {}
+
+	if result is None:
+		dic["data"] = {'error': 'true', 'message':'景點編號不正確'}
+		
+		return json.dumps(dic, ensure_ascii=False),400
+	else:		
+		name = result[1]
+		category = result[2]
+		description = result[3]
+		address = result[4]
+		transport = result[5]
+		mrt = result[6]
+		latitude = result[7]
+		longitude = result[8]
+		images = result[9]
+		images = images.split(",")
+		images.pop()
+		
+		dic["data"] = {'id':id, 'name':name, 'category':category, 'description':description, 'address':address, 'transport':transport, 'mat':mrt, 'latitude':latitude, 'longitude':longitude, 'images':images}
+		
+		return json.dumps(dic, ensure_ascii=False),200
+
+@app.route("/api/attractions")
 def attraction_page():
 
 	keyword = request.args.get("keyword", None)
-	print(keyword)
+
 	if keyword is None:
 
 		page_id = request.args.get("page", None)
@@ -72,13 +113,13 @@ def attraction_page():
 			detail = {'id':id, 'name':name, 'category':category, 'description':description, 'address':address, 'transport':transport, 'mrt':mrt, 'latitude':latitude, 'longitude':longitude, 'images':images}
 			page_list.append(detail)
 
-		if page_id >= (total_page-1):
+		if page_id >= (total_page):
 			dic["nextPage"] = "null"
 		else:
 			dic["nextPage"] = (page_id)
 		dic["data"] = page_list
 
-		return json.dumps(dic, ensure_ascii=False),200
+		# return json.dumps(dic, ensure_ascii=False),200
 
 	else:			
 		page_id = request.args.get("page", None)
@@ -113,56 +154,17 @@ def attraction_page():
 			images = images.split(",")
 			images.pop()
 				
-			detail = {'id':id, 'name':name, 'category':category, 'description':description, 'address':address, 'transport':transport, 'mar':mrt, 'latitude':latitude, 'longitude':longitude, 'images':images}
+			detail = {'id':id, 'name':name, 'category':category, 'description':description, 'address':address, 'transport':transport, 'mrt':mrt, 'latitude':latitude, 'longitude':longitude, 'images':images}
 			page_list.append(detail)
-
+			
 		if page_id > total_page-1:
 			dic["nextPage"] = "null"
 		else:
 			dic["nextPage"] = (page_id)
 		dic["data"] = page_list
 
-		return json.dumps(dic, ensure_ascii=False),200
+	return json.dumps(dic, ensure_ascii=False),200
 
-@app.route("/api/attractions/<id>")
-def attraction_id(id):
-
-	mycursor.execute(f"SELECT * FROM spot where id = {id}")
-	result = mycursor.fetchone()
-	dic = {}
-
-	if result is None:
-		dic["data"] = {'error': 'true', 'message':'景點編號不正確'}
-		return json.dumps(dic, ensure_ascii=False),400
-	else:		
-		name = result[1]
-		category = result[2]
-		description = result[3]
-		address = result[4]
-		transport = result[5]
-		mrt = result[6]
-		latitude = result[7]
-		longitude = result[8]
-		images = result[9]
-		images = images.split(",")
-		images.pop()
-		
-		dic["data"] = {'id':id, 'name':name, 'category':category, 'description':description, 'address':address, 'transport':transport, 'mar':mrt, 'latitude':latitude, 'longitude':longitude, 'images':images}
-		return json.dumps(dic, ensure_ascii=False),200
-
-
-
-	# return render_template("attraction.html")
-
-
-@app.route("/booking")
-def booking():
-	return render_template("booking.html")
-
-
-@app.route("/thankyou")
-def thankyou():
-	return render_template("thankyou.html")
 
 
 # try 
