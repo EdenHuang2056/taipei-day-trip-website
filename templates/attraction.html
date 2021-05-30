@@ -140,13 +140,11 @@
             side_slide_1.addEventListener("click",function(){side_slide(-1)});
             side_slide1 = document.getElementById("side_slide1");
             side_slide1.addEventListener("click", function() {side_slide(1)});
-
             document.getElementById("name").innerHTML = title;
             document.getElementById("description").innerHTML = description;
-            document.getElementById("type").innerHTML = type+" at "+ mrt;
+            document.getElementById("type").innerHTML = type + " at " + mrt;
             document.getElementById("address").innerHTML = address;
             document.getElementById("transport").innerHTML = transport;
-            
             var indexValue = 1;
             showImg(indexValue);
             function btm_slide(e){
@@ -157,7 +155,6 @@
             var i;
             const img = document.querySelectorAll("img");
             // console.log(img.length);
-
             if(e > img.length){indexValue = 1}
             if(e < 1){indexValue = img.length}
             for(i = 0; i < img.length; i++){
