@@ -44,12 +44,6 @@ def thankyou():
 	
 
 
-
-
-
-
-
-
 @app.route("/api/attraction/<id>")
 def attraction_id(id):
 
