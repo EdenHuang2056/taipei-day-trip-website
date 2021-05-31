@@ -43,10 +43,16 @@ def thankyou():
 	return render_template("thankyou.html")
 	
 
+
+
+
+
+
+
+
 @app.route("/api/attraction/<id>")
 def attraction_id(id):
 
-	
 	mycursor.execute(f"SELECT * FROM spot where id = {id}")
 	result = mycursor.fetchone()
 	dic = {}

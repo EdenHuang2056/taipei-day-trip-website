@@ -66,9 +66,9 @@
    
     
     function researchData(key_word){
-        let src = "http://50.18.127.34:3000/api/attractions?page="+currentPage;
+        let src = "http://50.18.127.34/:3000/api/attractions?page="+currentPage;
         if (key_word !== null){
-            src="http://50.18.127.34:3000/api/attractions?page="+currentPage+"&keyword="+key_word;
+            src="http://50.18.127.34/:3000/api/attractions?page="+currentPage+"&keyword="+key_word;
         }
         fetch(src).then(function(response)
         {   
@@ -157,7 +157,7 @@
         bigbox.appendChild(box);
         
         var a = document.createElement("a");
-        a.href = "http://50.18.127.34:3000/attraction/"+number;
+        a.href = "http://50.18.127.34/:3000/attraction/"+number;
         box.appendChild(a);
 
         var photobox = document.createElement("img");

@@ -140,6 +140,7 @@ body{
 
 .text1{
     text-align: left; line-height: 40px;
+    margin-left:20px ;
 }
 
 /* .input1 :checked+label{
@@ -156,8 +157,15 @@ body{
 .button2{
     height: 40px;
     width: 160px;
-    background-color: #448899;    
+    background-color: #448899; 
+    color:white;
+    position: absolute; left: 20px; 
 } 
+
+.line{
+    max-width: 1200px;
+    margin: 20px auto;
+}
 
 .smallbox{
     max-width: 1200px;
