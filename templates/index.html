@@ -36,11 +36,10 @@
         </div>
     </div>
     <div class = "head">
-        <span class = "text1">輕鬆享受台北一日悠閒</span>
+        <span class = "text1 Cyan700">輕鬆享受台北一日悠閒</span>
         <span class = "text2">探索每個角落，體驗城市的深度體驗城市的深度旅遊行程</span>
         <input type="text" class = "input1" placeholder="輸入景點名稱查詢" id = "inputkeyword"> </input>
-        <button id = "search" class = "button2 Cyan800" ><img src="../static/icon_search.png"> </button>
-        <!-- <button id = "search">查詢</button> -->
+        <button id = "search" class = "button2 " ><img src="../static/icon_search.png"> </button>
         <img class = "welcome1" src= "../static/welcome 1.png"></img>
     
     </div>
@@ -48,7 +47,7 @@
     <main id = "content">
         
     </main>
-    <footer class = "footer" background = "Gray700"> COPYRIGHT©2021台北一日遊</footer>
+    <footer class = "footer" > COPYRIGHT©2021台北一日遊</footer>
     
 <script>
 
@@ -117,6 +116,19 @@
     // document.body.appendChild(content);
     });
 
+    // var hrefbtn = document.getElementById("box");
+    // console.log(hrefbtn);
+
+    // hfetbtn.addEventListener('click', function()
+    // {
+    // var clear = document.getElementById("bigbox").innerHTML = "";
+    // key_word = document.getElementById("inputkeyword").value;
+    // currentPage = 0;    
+    // researchData(key_word);
+    // // document.body.appendChild(content);
+    // });
+
+
 
     function getData(result){
         
@@ -140,14 +152,19 @@
         
         box = document.createElement("div");
         box.className = "box";
-
+        box.id = "box";
+        
         bigbox.appendChild(box);
+        
+        var a = document.createElement("a");
+        a.href = "http://50.18.127.34:3000/attraction/"+number;
+        box.appendChild(a);
 
         var photobox = document.createElement("img");
         photobox.src = web
         photobox.className = "photobox";
 
-        box.appendChild(photobox);
+        a.appendChild(photobox);
 
         var titlebox = document.createElement("div");
         titlebox.classList.add('titlebox');
@@ -168,6 +185,10 @@
         var mrtname = document.createElement("span");
         mrtname.className = "mrtname";
         mrtname.innerText = mrt;
+        
+        // var idnumber = document.createElement("span");
+        // idnumber.className = "idnumber";
+        // idnumber.innerText = number;
 
         var typename = document.createElement("span");
         typename.className = "typename";
@@ -175,6 +196,13 @@
 
         titlename2.appendChild(mrtname);
         titlename2.appendChild(typename);
+        // titlename2.appendChild(idnumber);
+        
+        
+        
+        // box.addEventListener("click", function(){
+            
+        // })
 
     };
     var content = document.getElementById("content").appendChild(bigbox);

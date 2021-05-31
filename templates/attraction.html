@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="../static/color_size.css" media="all"/>
+    <link rel="stylesheet" type="text/css" href="../static/attraction.css" media="all"/>
+    <meta charset = "utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <title></title>
+
+<style>
+
+</style>
+
+</head>
+<body>
+    <div class = "nav1">
+        <div class = "div1">
+            <span class = "title1 Cyan700" >台北一日遊</span>
+            <span class = "title2">    
+                <button class = "button1">預定行程</button>
+                <button class = "button1">登入/註冊</button>
+            </span>
+        </div>
+    </div>
+    <div class = "bigbox">
+        <div class = "photo">
+            <div class = "content">
+                <div class = "images" id = "images"></div>
+                <div id="side_slide_1" class = "slide left">
+                    <span class = "fas fa-angle-left">&#10094</span>
+                </div>
+                <div id="side_slide1" class = "slide right">
+                    <span class = "fas fa-angle-right">&#10095</span>
+                </div>
+                <div class = "btm_sliders" id = "btm_sliders"></div>
+            </div>    
+        </div>
+        <div class = "box">
+            <div class = "name Gray800 Header3 Bold" id = "name">平安鐘</div>
+            <div class = "type Gray800 Body" id = "type">公共場所</div>
+            <div class = "date" id = "date">
+                <div class = "text1 Gray800 Body Bold">訂購導覽行程</div>
+                <div class = "text1 Gray800 Body">以此景點為中心的一日行程，帶您探索城市角落故事</div>
+                <div class = "text1 Gray800 Body">選擇日期：
+                    <input class = "input1" type="date" name="bday" id=""></input>
+                </div>
+                <div class = "text1 Gray800 Body">選擇時間：
+                    <input class = "input2" type="radio" name = "time" value = "2000" id = "morning">上半天
+                    <lable></lable>
+                    <input class = "input2" type="radio" name = "time" value = "2500" id = "evening">下半天
+                    <lable></lable>
+                </div>
+                <div class = "text1 Gray800 Body">導覽費用：
+                    <span id = "howmuch" >新台幣      元</span>
+                </div>
+                    <button class = "button2 Button">開始預定行程</button>  
+            </div>
+        </div>
+    </div>
+    <hr class = "line"/>
+    <div class = "smallbox">
+        <div class = "text2 description Body" id = "description">內容</div>
+        <div class = "text2 Body Bold">景點地址:</div>
+        <div class = "text2 address Body" id = "address">地址</div>
+        <div class = "text2 Body Bold">交通方式:</div>
+        <div class = "text2 transport Body" id = "transport">交通</div>
+    </div>
+    <main>
+        
+
+    </main>
+    <footer class = "footer" background-color = "Gray700"> COPYRIGHT©2021台北一日遊</footer>
+    
+    <script>
+        
+        url = location.href;
+        url = url.split("/");
+        var id = url[4];
+
+        var currentPage = 0;
+        let result;
+        let data;
+        let bigbox;
+        let box;
+        let windowHeight;
+        var key_word = null;
+        var web;
+       
+    
+        bigbox = document.createElement("div");
+        bigbox.className = "bigbox";
+        bigbox.id = "bigbox";
+        
+        
+        function researchData(id){
+            let src = "http://50.18.127.34:3000/api/attraction/"+id;
+            console.log(src);
+            fetch(src).then(function(response){   
+                return response.json();
+            }
+            ).then(function(result){
+            getData(result);
+            });
+        }
+    
+        researchData(id);
+
+        function getData(result){
+            
+            console.log(result.data);
+            let title = result.data.name;
+            let description = result.data.description;
+            let type = result.data.category;
+            let address = result.data.address;
+            let transport = result.data.transport;
+            let mrt = result.data.mrt;
+            web = result.data.images;
+
+            // var photo = document.getElementById("images");
+            for (let j = 0; j < web.length; j++){
+            var image = document.createElement("img");
+            image.src = web[j];
+            document.getElementById("images").appendChild(image);
+            }
+            
+            for (let k = 1; k < web.length+1; k++){
+            let btmid = "btm"+k
+            var btm_slider = document.createElement("span");
+            btm_slider.id = btmid;
+            btm_slider.addEventListener("click", function(){btm_slide(k)});
+            var sliders = document.querySelectorAll(".btm_sliders span");
+
+            // var idgetclick = document.getElementById("btm"+k);
+            // console.log(idgetclick);
+            // idgetclick.addEventListener("click", btm_slide(k));
+            // btm_slider.onclickName = "btm_slide(j+1)";
+            // btm_slider.innerHTML = "DEMO";
+            document.getElementById("btm_sliders").appendChild(btm_slider);  
+            } 
+            side_slide_1 = document.getElementById("side_slide_1");
+            side_slide_1.addEventListener("click",function(){side_slide(-1)});
+            side_slide1 = document.getElementById("side_slide1");
+            side_slide1.addEventListener("click", function() {side_slide(1)});
+            document.getElementById("name").innerHTML = title;
+            document.getElementById("description").innerHTML = description;
+            document.getElementById("type").innerHTML = type + " at " + mrt;
+            document.getElementById("address").innerHTML = address;
+            document.getElementById("transport").innerHTML = transport;
+            var indexValue = 1;
+            showImg(indexValue);
+            function btm_slide(e){
+                showImg(indexValue = e);}
+            function side_slide(e){
+                showImg(indexValue += e);}
+            function showImg(e){
+            var i;
+            const img = document.querySelectorAll("img");
+            // console.log(img.length);
+            if(e > img.length){indexValue = 1}
+            if(e < 1){indexValue = img.length}
+            for(i = 0; i < img.length; i++){
+            img[i].style.display = "none"; 
+            }
+            for(i = 0; i < sliders.length; i++){
+            sliders[i].style.background = "white"; 
+            }
+            img[indexValue-1].style.display = "block";
+            sliders[indexValue-1].style.background = "black"; 
+            }
+
+
+            var button1 = document.getElementById("morning");
+            button1.addEventListener("click",function(){
+            var clear = document.getElementById("howmuch").innerHTML = "";
+            var money = document.getElementById("howmuch").innerHTML = "新台幣 2000 元";
+            });
+        
+            var button2 = document.getElementById("evening");
+            button2.addEventListener("click",function(){
+            var money = document.getElementById("howmuch").innerHTML = "新台幣 2500 元";
+            });  
+        };
+        
+    </script>
+    
+</body>
+
+</html>
+

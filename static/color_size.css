@@ -62,31 +62,31 @@
 }
 
 .Cyan800{
-    background: #448899;
+    color:  #448899;
 }
 
 .Cyan700{
-    background: #66AABB;
+    color: #66AABB;
 }
 
 .Cyan100{
-    background: #AADDEE;
+    color: #AADDEE;
 }
 
 .Gray800{
-    background: #666666;
+    color: #666666;
 }
 
 .Gray700{
-    background: #757575;
+    color: #757575;
 }
 
 .Gray300{
-    background: #E8E8E8;
+    color: #E8E8E8;
 }
 
 .Gray50{
-    background: #F8F8F8;
+    color: #F8F8F8;
 }
 
 

@@ -42,10 +42,11 @@ def booking():
 def thankyou():
 	return render_template("thankyou.html")
 	
+
+
 @app.route("/api/attraction/<id>")
 def attraction_id(id):
 
-	
 	mycursor.execute(f"SELECT * FROM spot where id = {id}")
 	result = mycursor.fetchone()
 	dic = {}
@@ -67,7 +68,7 @@ def attraction_id(id):
 		images = images.split(",")
 		images.pop()
 		
-		dic["data"] = {'id':id, 'name':name, 'category':category, 'description':description, 'address':address, 'transport':transport, 'mat':mrt, 'latitude':latitude, 'longitude':longitude, 'images':images}
+		dic["data"] = {'id':id, 'name':name, 'category':category, 'description':description, 'address':address, 'transport':transport, 'mrt':mrt, 'latitude':latitude, 'longitude':longitude, 'images':images}
 		
 		return json.dumps(dic, ensure_ascii=False),200
 
