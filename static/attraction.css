@@ -12,10 +12,11 @@ body{
 
 .div1{
     max-width: 1920px;
-    height: 34px;
-    margin:0 auto;
+    height: 54px;
+    margin:20px auto;
     display: flex;
     justify-content: space-between;
+    
 }
 
 .title1{
@@ -25,11 +26,29 @@ body{
 
 .title2{
     padding:13px 0;
+    /* position: relative; */
 
 }
 
 .button1{
-    font-size: 21px;
+    font-size: 21px;cursor: pointer;
+}
+
+.sign{
+    /* position: fixed; top:100px; left:50%; transform:translate(-100px,0px); */
+    width: 200px;
+    height: 250px;
+    background-color: white;
+    box-shadow: 0px 0px 10px;
+    display: none;
+    /* z-index: 10;
+    position: absolute; */
+    
+}
+
+.close{
+    position: absolute; top:2px; right:2px;
+    cursor: pointer;
 }
 
 .bigbox{
@@ -39,7 +58,6 @@ body{
     margin: auto;
     display: flex;
     justify-content: space-around;
-
 }
 
 .photo{
@@ -55,7 +73,6 @@ body{
     position: relative;
     height: 420px;
     width: 540px;
-
 }
 
 .content .images{

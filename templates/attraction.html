@@ -17,8 +17,16 @@
         <div class = "div1">
             <span class = "title1 Cyan700" >台北一日遊</span>
             <span class = "title2">    
-                <button class = "button1">預定行程</button>
-                <button class = "button1">登入/註冊</button>
+                <button id = "booking" class = "button1">預定行程</button>
+                <button id = "signin" class = "button1">登入/註冊</button>
+                <div id = "sign" class = "sign">
+                    <div id = "close" class = "close">X</div>
+                    登入會員帳號
+                    <input type="text">
+                    <input type="text">
+                    <button></button>
+                    <div>還沒有帳戶？點此註冊</div>
+                </div>
             </span>
         </div>
     </div>
@@ -72,7 +80,21 @@
     <footer class = "footer" background-color = "Gray700"> COPYRIGHT©2021台北一日遊</footer>
     
     <script>
+        var sign;
+        window.onload = function(){
+        sign = document.getElementById("sign");
+        };
+
+        var signin = document.getElementById("signin");
+        signin.addEventListener("click", function(){
+        sign.style.display = "display";  
+        });
+        var closebox = document.getElementById("close");
+        closebox.addEventListener("click", function(){
+        sign.style.display = "none";
+        });
         
+
         url = location.href;
         url = url.split("/");
         var id = url[4];
@@ -93,8 +115,8 @@
         
         
         function researchData(id){
-            let src = "http://50.18.127.34:3000/api/attraction/"+id;
-            console.log(src);
+            let src = "http://0.0.0.0:3000/api/attraction/"+id;
+            // console.log(src);
             fetch(src).then(function(response){   
                 return response.json();
             }
@@ -107,7 +129,7 @@
 
         function getData(result){
             
-            console.log(result.data);
+            // console.log(result.data);
             let title = result.data.name;
             let description = result.data.description;
             let type = result.data.category;
@@ -141,11 +163,13 @@
             side_slide_1.addEventListener("click",function(){side_slide(-1)});
             side_slide1 = document.getElementById("side_slide1");
             side_slide1.addEventListener("click", function() {side_slide(1)});
+            
             document.getElementById("name").innerHTML = title;
             document.getElementById("description").innerHTML = description;
             document.getElementById("type").innerHTML = type + " at " + mrt;
             document.getElementById("address").innerHTML = address;
             document.getElementById("transport").innerHTML = transport;
+            
             var indexValue = 1;
             showImg(indexValue);
             function btm_slide(e){
@@ -177,6 +201,7 @@
         
             var button2 = document.getElementById("evening");
             button2.addEventListener("click",function(){
+            var clear = document.getElementById("howmuch").innerHTML = "";
             var money = document.getElementById("howmuch").innerHTML = "新台幣 2500 元";
             });  
         };

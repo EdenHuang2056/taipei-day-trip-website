@@ -4,6 +4,7 @@ from flask import redirect
 from flask import render_template  
 from flask import session
 from flask import url_for
+from flask import jsonify
 import mysql.connector
 import json
 
@@ -41,7 +42,75 @@ def booking():
 @app.route("/thankyou")
 def thankyou():
 	return render_template("thankyou.html")
-	
+
+
+# @app.route("/api/user", methods = ["GET"])
+# def get_user_data():
+# 	if "email"in session:
+# 		return jsonify({"data":{
+# 			"id":session["id"],
+# 			"name":session["name"],
+# 			"email":session["email"]
+# 			}
+# 		})
+# 	else:
+# 			return jsonify({"data":None})
+
+# @app.route("/api/user", methods = ["POST"])
+# def create_new_user():
+# 	data = request.get_json()
+# 	name = data["name"]
+# 	email = data["email"]
+# 	password = data["password"]
+
+# 	try:
+# 		if name and email and password:
+# 			user = user_tb.query.filter_by(emial = email).first()
+# 			if user:
+# 				return jsonify({"error":True, "message":"此信箱已被註冊過,註冊失敗"}),400
+# 			else:
+# 				new_user = user_tb(name = data["name"], email = data["email"], password = data["password"])
+# 				db.session.add(new_user)
+# 				db.session.dommit()
+# 				return jsonify({"ok":True})
+# 		else:
+# 			return jsonify({"error":True})
+# 	except:
+# 		return jsonify({"error":True, "message":"伺服器內部錯誤"}),500
+
+
+# @app.route("/api/user", methods = ["PATCH"])
+# def user_signin():
+#     data = request.get_json()
+# 	email = data["email"]
+# 	password = data["password"]
+
+# 	try:
+# 		if email and password:
+#     		sql = f"select * from member where email = '{email}' and password = '{password}'"
+# 			result = db.engine.execute(sql)
+# 			for row in result:
+#     			session["id"] = row[0]
+# 				session["email"] = row[2]
+# 				session["name"] = row[1]
+# 				return jsonify({"ok":True})
+# 		else:
+#     		return jsonify({"error":True})
+# 	except:
+# 			return jsonify({"error":True, "message":"伺服器內部錯誤"}),500
+
+# @app.route("/api/user", methods = ["DELETE"])
+# 	def user_signout():
+#     	if "email" in session:
+#     		session.pop("id")
+# 			session.pop("name")
+# 			session.pop("email")
+# 			return jsonify({"ok":True})
+
+
+
+# 
+
 
 
 @app.route("/api/attraction/<id>")
