@@ -19,13 +19,13 @@
             <span class = "title2">    
                 <button id = "booking" class = "button1">預定行程</button>
                 <button id = "signin" class = "button1">登入/註冊</button>
-                <form  id = "sign" class = "sign">
+                <form  action ="/api/user" id = "sign" class = "sign" method = "PATCH">
                     <div class="arow" ></div>
                     登入會員帳號
                     <div id = "close" class = "close">X</div>
                     <input id = "email" type="text" class = "email" placeholder="輸入電子信箱">
                     <input id = "password" type="text" class = "password"placeholder="輸入密碼">
-                    <button id = "membersign" class="button2" method = "PATCH">登入帳戶</button>
+                    <button id = "membersign" class="button2" >登入帳戶</button>
                     <div id = "signup" class="title3">還沒有帳戶？點此註冊</div>
                 </form>
                 <form action = "/api/user" method = "POST" id = "usersign" class="usersign" >
@@ -305,11 +305,11 @@
         membersign.addEventListener("click", function(){
         var email =document.getElementById("email").value;
         var password = document.getElementById("password").value;
-        console.log(password);
-        console.log("password");
+        // console.log(password);
+        // console.log("password");
         var data1 = {"email": email, "password": password};
         patchData("http://0.0.0.0:3000/api/user", data1)
-        .then(data => console.log(data)) 
+        // .then(data1 => console.log(data1)) 
         // .catch(error => console.error(error))
         });
        

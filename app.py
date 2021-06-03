@@ -110,17 +110,19 @@ def user_signin():
 	data = request.get_json()
 	email = data["email"]
 	password = data["password"]
-
-	print(email)
-	print(password)
+	print(data)
+	# print(email)
+	# print(password)
 	mycursor.execute(f"SELECT * FROM member where email = '{email}' and password = '{password}'")
 	member_result = mycursor.fetchone()
 	print(member_result)
 	try:
-		if member_result is True:
+		if member_result:
 			session["id"] = member_result[0]
 			session["name"] = member_result[1]
 			session["email"] = member_result[2]
+			print(member_result)
+
 			return jsonify({"ok":True})
 		else:
 			return jsonify({"error":True})
@@ -128,7 +130,7 @@ def user_signin():
 		return jsonify({"error":True, "message":"伺服器內部錯誤"}),500
 
 
-# 	data = request.get_json()
+# data = request.get_json()
 # 	email = data["email"]
 # 	password = data["password"]
 
