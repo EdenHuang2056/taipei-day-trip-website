@@ -1,3 +1,4 @@
+import re
 from flask import Flask
 from flask import request      
 from flask import redirect     
@@ -16,14 +17,14 @@ app.config["TEMPLATES_AUTO_RELOAD"]=True
 app.secret_key = b'\xe8s\xb9\x0e\xddZ \xc3\x80\xa5\x1a\x11\x99J\xe7V'
 
 
-mydb = mysql.connector.connect(
+mydatabase = mysql.connector.connect(
     host="127.0.0.1",
     username="root",
     password="!Anctu820228",
     database="travel_site"
 )
 
-mycursor = mydb.cursor()
+mycursor = mydatabase.cursor()
 
 
 # Pages
@@ -44,44 +45,90 @@ def thankyou():
 	return render_template("thankyou.html")
 
 
-# @app.route("/api/user", methods = ["GET"])
-# def get_user_data():
-# 	if "email"in session:
-# 		return jsonify({"data":{
-# 			"id":session["id"],
-# 			"name":session["name"],
-# 			"email":session["email"]
-# 			}
-# 		})
-# 	else:
-# 			return jsonify({"data":None})
+@app.route("/api/user", methods = ["GET"])
+def get_user_data():
+	if request.method == "GET":
+		if "email"in session:
+			return jsonify({"data":{
+				"id":session["id"],
+				"name":session["name"],
+				"email":session["email"]
+				}
+			})
+		else:
+			return jsonify({"data":None})    			
 
-# @app.route("/api/user", methods = ["POST"])
-# def create_new_user():
+@app.route("/api/user", methods = ["POST"])
+def create_new_user():
+	mycursor.execute(f"SELECT * FROM member where email=' {request.values['email']}'")
+	result = mycursor.fetchone()
+	print(result)
+	try:
+		if result:
+			return jsonify({"error":True, "message":"此信箱已被註冊過,註冊失敗"}),400
+		else:
+			sql = "INSERT INTO member (name, email, password) VALUES (%s, %s, %s)"
+			val = (str(request.values["name"]), str(request.values["email"]), str(request.values["password"]))
+			mycursor.execute(sql, val)
+			mydatabase.commit()
+			return jsonify({"ok":True})
+	except:
+		return jsonify({"error":True, "message":"伺服器內部錯誤"}),500
+	
+	
+	# data = request.get_json()
+	# print(data)
+	# print(request.values["name"])
+	# print(request.values['email'])
+	# print(request.values['password'])
+
+	
+	
+	# name = data["name"]
+	# email = data["email"]
+	# password = data["password"]
+	# return jsonify({"error":True, "message":"此信箱已被註冊過,註冊失敗"}),400
+
+	# try:
+	# 	if name and email and password:
+	# 		user = user_tb.query.filter_by(emial = email).first()
+	# 		if user:
+	# 			return jsonify({"error":True, "message":"此信箱已被註冊過,註冊失敗"}),400
+	# 		else:
+	# 			new_user = user_tb(name = data["name"], email = data["email"], password = data["password"])
+	# 			db.session.add(new_user)
+	# 			db.session.dommit()
+	# 			return jsonify({"ok":True})
+	# 	else:
+	# 		return jsonify({"error":True})
+	# except:
+	# 	return jsonify({"error":True, "message":"伺服器內部錯誤"}),500
+
+
+@app.route("/api/user", methods = ["PATCH"])
+def user_signin():
+	data = request.get_json()
+	email = data["email"]
+	password = data["password"]
+
+	print(email)
+	print(password)
+	mycursor.execute(f"SELECT * FROM member where email = '{email}' and password = '{password}'")
+	member_result = mycursor.fetchone()
+	print(member_result)
+	try:
+		if member_result is True:
+			session["id"] = member_result[0]
+			session["name"] = member_result[1]
+			session["email"] = member_result[2]
+			return jsonify({"ok":True})
+		else:
+			return jsonify({"error":True})
+	except:
+		return jsonify({"error":True, "message":"伺服器內部錯誤"}),500
+
+
 # 	data = request.get_json()
-# 	name = data["name"]
-# 	email = data["email"]
-# 	password = data["password"]
-
-# 	try:
-# 		if name and email and password:
-# 			user = user_tb.query.filter_by(emial = email).first()
-# 			if user:
-# 				return jsonify({"error":True, "message":"此信箱已被註冊過,註冊失敗"}),400
-# 			else:
-# 				new_user = user_tb(name = data["name"], email = data["email"], password = data["password"])
-# 				db.session.add(new_user)
-# 				db.session.dommit()
-# 				return jsonify({"ok":True})
-# 		else:
-# 			return jsonify({"error":True})
-# 	except:
-# 		return jsonify({"error":True, "message":"伺服器內部錯誤"}),500
-
-
-# @app.route("/api/user", methods = ["PATCH"])
-# def user_signin():
-#     data = request.get_json()
 # 	email = data["email"]
 # 	password = data["password"]
 
@@ -107,9 +154,61 @@ def thankyou():
 # 			session.pop("email")
 # 			return jsonify({"ok":True})
 
+# @app.route("/api/user", methods = ["GET", "POST","PATCH","DELETE"])
+# def get_user_data():
+# 	if request.method == "GET":
+# 		if "email"in session:
+# 			return jsonify({"data":{
+# 				"id":session["id"],
+# 				"name":session["name"],
+# 				"email":session["email"]
+# 				}
+# 			})
+# 		else:
+# 			return jsonify({"data":None})
+# def create_new_user():
+# 	if request.method == "POST":
+# 		mycursor.execute(f"SELECT * FROM member where email=' {request.values['email']}'")
+# 		result = mycursor.fetchone()
+# 		print(result)
+# 		try:
+# 			if result:
+# 				return jsonify({"error":True, "message":"此信箱已被註冊過,註冊失敗"}),400
+# 			else:
+# 				sql = "INSERT INTO member (name, email, password) VALUES (%s, %s, %s)"
+# 				val = (str(request.values["name"]), str(request.values["email"]), str(request.values["password"]))
+# 				mycursor.execute(sql, val)
+# 				mydatabase.commit()
+# 				return jsonify({"ok":True})
+# 		except:
+# 			return jsonify({"error":True, "message":"伺服器內部錯誤"}),500
+# def user_signin():	
+# 	if request.method == "PATCH":
+# 		data = request.get_json()
+# 		email = data["email"]
+# 		password = data["password"]
+
+# 		print(email)
+# 		print(password)
+# 		mycursor.execute(f"SELECT * FROM member where email = '{email}' and password = '{password}'")
+# 		member_result = mycursor.fetchone()
+# 		print(member_result)
+# 		try:
+# 			if member_result is True:
+# 				session["id"] = member_result[0]
+# 				session["name"] = member_result[1]
+# 				session["email"] = member_result[2]
+# 				return jsonify({"ok":True})
+# 			else:
+# 				return jsonify({"error":True})
+# 		except:
+# 			return jsonify({"error":True, "message":"伺服器內部錯誤"}),500
+
+# def user_signout():
+#     	if request.method == "DELETE":
 
 
-# 
+
 
 
 

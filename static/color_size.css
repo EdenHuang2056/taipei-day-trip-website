@@ -61,6 +61,14 @@
     line-height: 13px;
 }
 
+/* .Dark_Cyan_Gradient{
+    color:linear-gradient ( 0deg, #337788 100%, #66AABB 100%);
+}
+
+.Light_Cyan_Gradient{
+    color:#AADDEE 100% #66AABB 100%;
+} */
+
 .Cyan800{
     color:  #448899;
 }
@@ -71,6 +79,10 @@
 
 .Cyan100{
     color: #AADDEE;
+}
+
+.Blue_Gray{
+    color:#AABBCC;
 }
 
 .Gray800{

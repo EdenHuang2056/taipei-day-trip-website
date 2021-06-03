@@ -25,10 +25,30 @@
 <body>
     <div class = "nav1">
         <div class = "div1">
-            <span class = "title1">台北一日遊</span>
+            <span class = "title1 Cyan700">台北一日遊</span>
+                
             <span class = "title2">    
-                <button class = "button1">預定行程</button>
-                <button class = "button1">登入/註冊</button>
+                <button id = "booking" class = "button1">預定行程</button>
+                <button id = "signin" class = "button1">登入/註冊</button>
+                <div id = "sign" class = "sign">
+                    <div class="arow" ></div>
+                    登入會員帳號
+                    <div id = "close" class = "close">X</div>
+                    <input type="text" class = "email" placeholder="輸入電子信箱">
+                    <input type="text" class = "password"placeholder="輸入密碼">
+                    <button class="button2" type="submit">登入帳戶</button>
+                    <div id = "signup" class="title3">還沒有帳戶？點此註冊</div>
+                </div>
+                <div id = "usersign" class="usersign" >
+                    <div class="arow" ></div>
+                    註冊會員帳號
+                    <div id = "closed" class = close>X</div>
+                    <input type="text" class = "name" placeholder="輸入姓名">
+                    <input type="text" class = "email" placeholder="輸入電子信箱">
+                    <input type="text" class = "password"placeholder="輸入密碼">
+                    <button class = "button2" type="submit">註冊新帳戶</button>
+                    <div id = "usersignin" class = "title3">已經有帳戶了？點此登入</div>
+                </div>
             </span>
         </div>
     </div>
@@ -36,7 +56,7 @@
         <span class = "text1 Cyan700">輕鬆享受台北一日悠閒</span>
         <span class = "text2">探索每個角落，體驗城市的深度體驗城市的深度旅遊行程</span>
         <input type="text" class = "input1" placeholder="輸入景點名稱查詢" id = "inputkeyword"> </input>
-        <button id = "search" class = "button2 " ><img src="../static/icon_search.png"> </button>
+        <button id = "search" class = "button3 " ><img src="../static/icon_search.png"> </button>
         <img class = "welcome1" src= "../static/welcome 1.png"></img>
     
     </div>
@@ -44,6 +64,45 @@
     <footer class = "footer" > COPYRIGHT©2021台北一日遊</footer>
     
 <script>
+
+    var sign;
+    var usersign;
+    window.onload = function(){
+    sign = document.getElementById("sign");
+    usersign = document.getElementById("usersign");
+    };
+
+    var signin = document.getElementById("signin");
+    signin.addEventListener("click", function(){
+    sign.style.display = "block";
+    usersign.style.display = "none";
+
+    });
+    var closebox = document.getElementById("close");
+    closebox.addEventListener("click", function(){
+    sign.style.display = "none";
+    usersign.style.display = "none";
+    });
+    
+    
+    var signup = document.getElementById("signup");
+    signup.addEventListener("click", function(){
+    sign.style.display = "none";
+    usersign.style.display = "block";
+    });
+
+    var close2 = document.getElementById("closed");
+    close2.addEventListener("click", function(){
+    sign.style.display = "none";
+    usersign.style.display = "none";
+    });
+
+    var usersignin = document.getElementById("usersignin");
+    usersignin.addEventListener("click", function(){
+    usersign.style.display = "none";
+    sign.style.display = "block";
+    });
+
 
     var currentPage = 0;
     let result;

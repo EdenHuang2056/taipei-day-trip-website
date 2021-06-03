@@ -19,23 +19,26 @@
             <span class = "title2">    
                 <button id = "booking" class = "button1">預定行程</button>
                 <button id = "signin" class = "button1">登入/註冊</button>
-                <div id = "sign" class = "sign">
+                <form  id = "sign" class = "sign">
+                    <div class="arow" ></div>
                     登入會員帳號
                     <div id = "close" class = "close">X</div>
-                    <input type="text" class = "email" placeholder="輸入電子信箱">
-                    <input type="text" class = "password"placeholder="輸入密碼">
-                    <button class="button2">登入帳戶</button>
+                    <input id = "email" type="text" class = "email" placeholder="輸入電子信箱">
+                    <input id = "password" type="text" class = "password"placeholder="輸入密碼">
+                    <button id = "membersign" class="button2" method = "PATCH">登入帳戶</button>
                     <div id = "signup" class="title3">還沒有帳戶？點此註冊</div>
-                <div id = "usersign" class="usersign" >
+                </form>
+                <form action = "/api/user" method = "POST" id = "usersign" class="usersign" >
+                    <div class="arow" ></div>
                     註冊會員帳號
                     <div id = "closed" class = close>X</div>
-                    <input type="text" class = "name" placeholder="輸入姓名">
-                    <input type="text" class = "email" placeholder="輸入電子信箱">
-                    <input type="text" class = "password"placeholder="輸入密碼">
-                    <button>註冊新帳戶</button>
-                    <div id = "usersignin" >已經有帳戶了？點此登入</div>
-                </div>
-                </div>
+                    <input type="text" class = "name" name = "name" placeholder="輸入姓名">
+                    <input type="text" class = "email" name = "email" placeholder="輸入電子信箱">
+                    <input type="text" class = "password" name = "password" placeholder="輸入密碼">
+                    <button class = "button2" >註冊新帳戶</button>
+                    <div id = "usersignin" class = "title3">已經有帳戶了？點此登入</div>
+                </form>
+                
             </span>
         </div>
     </div>
@@ -53,7 +56,7 @@
             </div>    
         </div>
         <div class = "box">
-            <div class = "name Gray800 Header3 Bold" id = "name">平安鐘</div>
+            <div class = "spotname Gray800 Header3 Bold" id = "name">平安鐘</div>
             <div class = "type Gray800 Body" id = "type">公共場所</div>
             <div class = "date" id = "date">
                 <div class = "text1 Gray800 Body Bold">訂購導覽行程</div>
@@ -68,7 +71,7 @@
                     <lable></lable>
                 </div>
                 <div class = "text1 Gray800 Body">導覽費用：
-                    <span id = "howmuch" >新台幣      元</span>
+                    <span id = "howmuch" >新台幣    元</span>
                 </div>
                     <button class = "button3 Button">開始預定行程</button>  
             </div>
@@ -84,20 +87,68 @@
     </div>
     <main>
         
-
     </main>
     <footer class = "footer" background-color = "Gray700"> COPYRIGHT©2021台北一日遊</footer>
     
     <script>
+        
+
+        
+
+        // function getlove(){
+        // var dataUrl= "/api/user"
+        // var xhr = new XMLHttpRequest()
+        // xhr.open('PATCH',dataUrl, true)
+        // xhr.send()
+        // xhr.onload = function(){
+        // var data2 = JSON.parse(this.responseText);
+        // console.log(data2);
+        // }};
+
+
+
+        // function get(data1){
+        // console.log(data1);
+        // var xhr = new XMLHttpRequest();
+        // xhr.open("PATCH", "/api/user", true); //post 告知後端
+        // xhr.setRequestHeader("Content-type", "application/json"); //告訴後端是用 JSON 格式
+        // var data2 = JSON.stringify(data1); //將物件資料轉成字串
+        // xhr.send(data2);} //送出字串
+
+        // function login() {
+        // var email =document.getElementById("email").value;
+        // var password = document.getElementById("password").value;
+        // var xmlhttp;
+        // xmlhttp.open("PATCH","/api/user",true);
+        // xmlhttp.setRequestHeader("Content-type","application/json");
+        // // 後面這兩部很重要，我看網上很多都是使用xmlhttp.send("username=" username "&password=" "),這樣接收還要解析一番感覺還是直接傳送以下格式的好些
+        // var data = {
+        // "email": email,
+        // "password": password
+        // };
+        // var data_json = JSON.stringify(data);
+        // xmlhttp.send(data_json);
+        // }
+
+        
+        // function enroll(){
+        //     var email_value = document.getElementById("email").value;
+        //     var password_value = document.getElementById("password").value;
+        //     var data;
+        //     data[email] = email_value;
+        //     data[password] = password_value;
+        //     fetch("/api/user").then(function(response){
+        //         return response.json();
+        //     }).then(function(myJosn){
+        //         console.log(myJson.data)
+        //     });
+        // };
         var sign;
         var usersign;
         window.onload = function(){
         sign = document.getElementById("sign");
         usersign = document.getElementById("usersign");
         };
-
-        
-        
 
         var signin = document.getElementById("signin");
         signin.addEventListener("click", function(){
@@ -111,7 +162,6 @@
         usersign.style.display = "none";
         });
         
-        
         var signup = document.getElementById("signup");
         signup.addEventListener("click", function(){
         sign.style.display = "none";
@@ -124,11 +174,11 @@
         usersign.style.display = "none";
         });
 
-        // var usersignin = document.getElementById("usersignin");
-        // usersignin.addEventListener("click", function(){
-        // usersign.style.display = "none";
-        // sign.style.display = "block";
-        // });
+        var usersignin = document.getElementById("usersignin");
+        usersignin.addEventListener("click", function(){
+        usersign.style.display = "none";
+        sign.style.display = "block";
+        });
 
         url = location.href;
         url = url.split("/");
@@ -241,9 +291,32 @@
             });  
         };
         
+        
+        function patchData (url, data){
+            return fetch(url, {
+                headers: {
+                    'content-type': 'application/json'},
+                body: JSON.stringify(data), method:("PATCH")
+            })
+            .then(response => response.json(data))
+        };
+
+        var membersign = document.getElementById("membersign");
+        membersign.addEventListener("click", function(){
+        var email =document.getElementById("email").value;
+        var password = document.getElementById("password").value;
+        console.log(password);
+        console.log("password");
+        var data1 = {"email": email, "password": password};
+        patchData("http://0.0.0.0:3000/api/user", data1)
+        .then(data => console.log(data)) 
+        // .catch(error => console.error(error))
+        });
+       
+
+
     </script>
     
 </body>
 
 </html>
-

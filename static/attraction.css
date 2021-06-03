@@ -37,16 +37,27 @@ body{
     width: 200px;
     height: 250px;
     background-color: white;
-    box-shadow: 0px 0px 10px;
+    box-shadow: 0px 0px 100px;
     display: none;
     z-index: 4;
     position: absolute;
     top:100px; left:50%; transform:translate(-100px,0px);
     margin: 20px auto;
 }
+
+.arow{
+    height: 10px;
+    background-color: #337788 ;
+    margin-bottom: 5px;
+}
+
 .close{
-    position: absolute; top:0px ;right:2px;
+    position: absolute; top:7px ;right:2px;
     cursor: pointer; 
+}
+
+.name{
+    margin: 10px auto;
 }
 
 .email{
@@ -72,7 +83,7 @@ body{
     width: 200px;
     height: 250px;
     background-color: white;
-    box-shadow: 0px 0px 10px;
+    box-shadow: 0px 0px 100px;
     display: none;
     z-index: 5;
     position: absolute;
@@ -173,7 +184,7 @@ body{
     width: 100%;
 }
 
-.name{
+.spotname{
     height:33px;
     text-align: left;
 
