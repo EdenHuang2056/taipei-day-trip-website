@@ -20,7 +20,7 @@ app.secret_key = b'\xe8s\xb9\x0e\xddZ \xc3\x80\xa5\x1a\x11\x99J\xe7V'
 mydatabase = mysql.connector.connect(
     host="127.0.0.1",
     username="root",
-    password="!Anctu820228",
+    password="!Q123qweqwe",
     database="travel_site"
 )
 
