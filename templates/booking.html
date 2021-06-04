@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="../static/color_size.css" media="all"/>
+    <link rel="stylesheet" type="text/css" href="../static/attraction.css" media="all"/>
+    <meta charset = "utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <title></title>
+
+<style>
+
+</style>
+
+</head>
+<body>
+    <div class = "nav1">
+        <div class = "div1">
+            <span id = "taipei" class = "title1 Cyan700" >台北一日遊</span>
+            <span class = "title2">    
+                <button id = "booking" class = "button1">預定行程</button>
+                <button id = "signin" class = "button1">登入/註冊</button>
+                <button  id = "signout" class = "button1-1"  >登出</button>
+                <form  action ="/api/user" id = "sign" class = "sign" method = "PATCH">
+                    <div class="arow" ></div>
+                    登入會員帳號
+                    <div id = "close" class = "close">X</div>
+                    <input id = "email" type="text" class = "email" placeholder="輸入電子信箱">
+                    <input id = "password" type="text" class = "password"placeholder="輸入密碼">
+                    <button id = "membersignin" class="button2" >登入帳戶</button>
+                    <div id = "signup" class="title3">還沒有帳戶？點此註冊</div>
+                </form>
+                <form action = "/api/user" method = "POST" id = "usersign" class="usersign" >
+                    <div class="arow" ></div>
+                    註冊會員帳號
+                    <div id = "closed" class = close>X</div>
+                    <input type="text" class = "name" name = "name" placeholder="輸入姓名">
+                    <input type="text" class = "email" name = "email" placeholder="輸入電子信箱">
+                    <input type="text" class = "password" name = "password" placeholder="輸入密碼">
+                    <button id = "membersignup" class = "button2" >註冊新帳戶</button>
+                    <div id = "usersignin" class = "title3">已經有帳戶了？點此登入</div>
+                </form>
+                
+            </span>
+        </div>
+    </div>
+    <hr/>
+    <div>
+
+    </div>
+    <hr/>
+    <div>
+
+    </div>
+    <hr/>
+    <div>
+
+    </div>
+
+    <hr/>
+    
+
+

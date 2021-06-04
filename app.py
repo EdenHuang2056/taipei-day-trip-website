@@ -121,16 +121,17 @@ def user_signin():
 			session["id"] = member_result[0]
 			session["name"] = member_result[1]
 			session["email"] = member_result[2]
-			print(member_result)
-
+			# print("1")
 			return jsonify({"ok":True})
 		else:
+			# print("2")
 			return jsonify({"error":True})
 	except:
+		# print("3")
 		return jsonify({"error":True, "message":"伺服器內部錯誤"}),500
 
 
-# data = request.get_json()
+# 	data = request.get_json()
 # 	email = data["email"]
 # 	password = data["password"]
 
@@ -148,13 +149,13 @@ def user_signin():
 # 	except:
 # 			return jsonify({"error":True, "message":"伺服器內部錯誤"}),500
 
-# @app.route("/api/user", methods = ["DELETE"])
-# 	def user_signout():
-#     	if "email" in session:
-#     		session.pop("id")
-# 			session.pop("name")
-# 			session.pop("email")
-# 			return jsonify({"ok":True})
+@app.route("/api/user", methods = ["DELETE"])
+def user_signout():
+	if "email" in session:
+		session.pop("id")
+		session.pop("name")
+		session.pop("email")
+		return jsonify({"ok":True})
 
 # @app.route("/api/user", methods = ["GET", "POST","PATCH","DELETE"])
 # def get_user_data():

@@ -8,24 +8,24 @@
     <title></title>
 
 <style>
-
 </style>
 
 </head>
 <body>
     <div class = "nav1">
         <div class = "div1">
-            <span class = "title1 Cyan700" >台北一日遊</span>
+            <span id = "taipei" class = "title1 Cyan700" >台北一日遊</span>
             <span class = "title2">    
                 <button id = "booking" class = "button1">預定行程</button>
                 <button id = "signin" class = "button1">登入/註冊</button>
+                <button  id = "signout" class = "button1-1"  >登出</button>
                 <form  action ="/api/user" id = "sign" class = "sign" method = "PATCH">
                     <div class="arow" ></div>
                     登入會員帳號
                     <div id = "close" class = "close">X</div>
                     <input id = "email" type="text" class = "email" placeholder="輸入電子信箱">
                     <input id = "password" type="text" class = "password"placeholder="輸入密碼">
-                    <button id = "membersign" class="button2" >登入帳戶</button>
+                    <button id = "membersignin" class="button2" >登入帳戶</button>
                     <div id = "signup" class="title3">還沒有帳戶？點此註冊</div>
                 </form>
                 <form action = "/api/user" method = "POST" id = "usersign" class="usersign" >
@@ -35,7 +35,7 @@
                     <input type="text" class = "name" name = "name" placeholder="輸入姓名">
                     <input type="text" class = "email" name = "email" placeholder="輸入電子信箱">
                     <input type="text" class = "password" name = "password" placeholder="輸入密碼">
-                    <button class = "button2" >註冊新帳戶</button>
+                    <button id = "membersignup" class = "button2" >註冊新帳戶</button>
                     <div id = "usersignin" class = "title3">已經有帳戶了？點此登入</div>
                 </form>
                 
@@ -92,63 +92,23 @@
     
     <script>
         
-
+        getuser()
         
-
-        // function getlove(){
-        // var dataUrl= "/api/user"
-        // var xhr = new XMLHttpRequest()
-        // xhr.open('PATCH',dataUrl, true)
-        // xhr.send()
-        // xhr.onload = function(){
-        // var data2 = JSON.parse(this.responseText);
-        // console.log(data2);
-        // }};
-
-
-
-        // function get(data1){
-        // console.log(data1);
-        // var xhr = new XMLHttpRequest();
-        // xhr.open("PATCH", "/api/user", true); //post 告知後端
-        // xhr.setRequestHeader("Content-type", "application/json"); //告訴後端是用 JSON 格式
-        // var data2 = JSON.stringify(data1); //將物件資料轉成字串
-        // xhr.send(data2);} //送出字串
-
-        // function login() {
-        // var email =document.getElementById("email").value;
-        // var password = document.getElementById("password").value;
-        // var xmlhttp;
-        // xmlhttp.open("PATCH","/api/user",true);
-        // xmlhttp.setRequestHeader("Content-type","application/json");
-        // // 後面這兩部很重要，我看網上很多都是使用xmlhttp.send("username=" username "&password=" "),這樣接收還要解析一番感覺還是直接傳送以下格式的好些
-        // var data = {
-        // "email": email,
-        // "password": password
-        // };
-        // var data_json = JSON.stringify(data);
-        // xmlhttp.send(data_json);
-        // }
-
-        
-        // function enroll(){
-        //     var email_value = document.getElementById("email").value;
-        //     var password_value = document.getElementById("password").value;
-        //     var data;
-        //     data[email] = email_value;
-        //     data[password] = password_value;
-        //     fetch("/api/user").then(function(response){
-        //         return response.json();
-        //     }).then(function(myJosn){
-        //         console.log(myJson.data)
-        //     });
-        // };
         var sign;
         var usersign;
+        var switchbutton;
+        var signout;
         window.onload = function(){
         sign = document.getElementById("sign");
         usersign = document.getElementById("usersign");
+        switchbutton = document.getElementById("signin");
+        signout = document.getElementById("signout");
         };
+        
+        var taipei = document.getElementById("taipei");
+        taipei.addEventListener("click", function(){
+        location.href = "/";
+        });
 
         var signin = document.getElementById("signin");
         signin.addEventListener("click", function(){
@@ -179,6 +139,21 @@
         usersign.style.display = "none";
         sign.style.display = "block";
         });
+
+        
+        var switchbutton = document.getElementById("signin");
+        var signout = document.getElementById("signout");
+
+        signout.addEventListener("click", function(){
+        switchbutton.style.display = "inline";
+        signout.style.display = "none";
+        delete_user();
+        });
+        // var membersignup = document.getElementById("membersignup");
+        // membersignup.addEventListener("click", function(){
+        // usersign.style.display = "none";
+        // sign.style.display = "none";
+        // });
 
         url = location.href;
         url = url.split("/");
@@ -291,18 +266,59 @@
             });  
         };
         
+        function getuser(){
+            fetch("/api/user", {
+                headers: {
+                'content-type': 'application/json'}
+        })
+        // .then((data) => {
+        //     if (data.ok) {
+        //         switchbutton.style.display = "none";
+        //         signout.style.display = "inline";
+        //         // switchbutton.innerHTML = "";
+        //         // switchbutton.innerHTML = "登出";
+        //     }else{
+        //         switchbutton.style.display = "inline";
+        //         signout.style.display = "none";
+        //     } 
+        // })
+        };
+
+        function delete_user(){
+            fetch("/api/user",{
+                headers:{
+                'content-type': 'application/json'},
+                method:("DELETE")
+            })
+            getuser();
+        };
         
         function patchData (url, data){
-            return fetch(url, {
+            fetch(url, {
                 headers: {
                     'content-type': 'application/json'},
                 body: JSON.stringify(data), method:("PATCH")
             })
             .then(response => response.json(data))
+            // .then((data) => console.log(data, 'data'))
+            .then((data) => {
+            if (data.ok) {
+                getuser()
+                switchbutton.style.display = "none";
+                signout.style.display = "inline";
+                // switchbutton.innerHTML = "";
+                // switchbutton.innerHTML = "登出";
+            } 
+            // else {
+            // // error 處理~~
+            // }
+            })
         };
 
-        var membersign = document.getElementById("membersign");
-        membersign.addEventListener("click", function(){
+        var membersignin = document.getElementById("membersignin");
+        membersignin.addEventListener("click", function(event){
+        event.preventDefault()
+        sign.style.display = "none";
         var email =document.getElementById("email").value;
         var password = document.getElementById("password").value;
         // console.log(password);
@@ -313,7 +329,54 @@
         // .catch(error => console.error(error))
         });
        
+        // function getlove(){
+        // var dataUrl= "/api/user"
+        // var xhr = new XMLHttpRequest()
+        // xhr.open('PATCH',dataUrl, true)
+        // xhr.send()
+        // xhr.onload = function(){
+        // var data2 = JSON.parse(this.responseText);
+        // console.log(data2);
+        // }};
 
+
+
+        // function get(data1){
+        // console.log(data1);
+        // var xhr = new XMLHttpRequest();
+        // xhr.open("PATCH", "/api/user", true); //post 告知後端
+        // xhr.setRequestHeader("Content-type", "application/json"); //告訴後端是用 JSON 格式
+        // var data2 = JSON.stringify(data1); //將物件資料轉成字串
+        // xhr.send(data2);} //送出字串
+
+        // function login() {
+        // var email =document.getElementById("email").value;
+        // var password = document.getElementById("password").value;
+        // var xmlhttp;
+        // xmlhttp.open("PATCH","/api/user",true);
+        // xmlhttp.setRequestHeader("Content-type","application/json");
+        // // 後面這兩部很重要，我看網上很多都是使用xmlhttp.send("username=" username "&password=" "),這樣接收還要解析一番感覺還是直接傳送以下格式的好些
+        // var data = {
+        // "email": email,
+        // "password": password
+        // };
+        // var data_json = JSON.stringify(data);
+        // xmlhttp.send(data_json);
+        // }
+
+        
+        // function enroll(){
+        //     var email_value = document.getElementById("email").value;
+        //     var password_value = document.getElementById("password").value;
+        //     var data;
+        //     data[email] = email_value;
+        //     data[password] = password_value;
+        //     fetch("/api/user").then(function(response){
+        //         return response.json();
+        //     }).then(function(myJosn){
+        //         console.log(myJson.data)
+        //     });
+        // };
 
     </script>
     
