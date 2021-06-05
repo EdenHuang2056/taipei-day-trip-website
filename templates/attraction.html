@@ -311,7 +311,7 @@
         })
         };
 
-        function patchData (url, data){
+        function signin_patchData (url, data){
             fetch(url, {
                 headers: {
                     'content-type': 'application/json'},
@@ -361,7 +361,7 @@
         console.log(signinpassword);
         console.log("signinpassword");
         var signindata = {"email": signinemail, "password": signinpassword};
-        patchData("/api/user", signindata)
+        signin_patchData("/api/user", signindata)
         // .then(signindata => console.log(signindata)) 
         // .catch(error => console.error(error))
         });

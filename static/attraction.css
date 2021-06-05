@@ -53,6 +53,7 @@ body{
     position: absolute;
     top:100px; left:50%; transform:translate(-100px,0px);
     margin: 20px auto;
+    padding: 0px;
 }
 
 .arow{
@@ -99,6 +100,8 @@ body{
     position: absolute;
     top:100px; left:50%; transform:translate(-100px,0px);
     margin: 20px auto;
+    padding: 0px;
+
 }
 
 .closed{

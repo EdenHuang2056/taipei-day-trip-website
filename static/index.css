@@ -52,6 +52,8 @@ body{
     position: absolute;
     top:100px; left:50%; transform:translate(-100px,0px);
     margin: 20px auto;
+    padding: 0px;
+
 }
 
 .arow{
@@ -98,6 +100,8 @@ body{
     position: absolute;
     top:100px; left:50%; transform:translate(-100px,0px);
     margin: 20px auto;
+    padding: 0px;
+
 }
 
 .closed{
@@ -265,6 +269,7 @@ main{
         position: absolute; top:242px; left:0px ;
     }
     
+
     .button2{
         position:absolute; left: 200px; top:242px;
         z-index: 2;
