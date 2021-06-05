@@ -19,25 +19,25 @@
                 <button id = "booking" class = "button1">預定行程</button>
                 <button id = "signin" class = "button1">登入/註冊</button>
                 <button  id = "signout" class = "button1-1"  >登出</button>
-                <form  action ="/api/user" id = "sign" class = "sign" method = "PATCH">
+                <ul  action ="/api/user" id = "sign" class = "sign" method = "PATCH">
                     <div class="arow" ></div>
                     登入會員帳號
                     <div id = "close" class = "close">X</div>
-                    <input id = "email" type="text" class = "email" placeholder="輸入電子信箱">
-                    <input id = "password" type="text" class = "password"placeholder="輸入密碼">
+                    <input id = "signinemail" type="text" class = "email" placeholder="輸入電子信箱">
+                    <input id = "signinpassword" type="text" class = "password"placeholder="輸入密碼">
                     <button id = "membersignin" class="button2" >登入帳戶</button>
                     <div id = "signup" class="title3">還沒有帳戶？點此註冊</div>
-                </form>
-                <form action = "/api/user" method = "POST" id = "usersign" class="usersign" >
+                </ul>
+                <ul action = "/api/user" method = "POST" id = "usersign" class="usersign" >
                     <div class="arow" ></div>
                     註冊會員帳號
                     <div id = "closed" class = close>X</div>
-                    <input type="text" class = "name" name = "name" placeholder="輸入姓名">
-                    <input type="text" class = "email" name = "email" placeholder="輸入電子信箱">
-                    <input type="text" class = "password" name = "password" placeholder="輸入密碼">
+                    <input id = "signupname" type="text" class = "name" name = "name" placeholder="輸入姓名">
+                    <input id = "signupemail" type="text" class = "email" name = "email" placeholder="輸入電子信箱">
+                    <input id = "signuppassword" type="text" class = "password" name = "password" placeholder="輸入密碼">
                     <button id = "membersignup" class = "button2" >註冊新帳戶</button>
                     <div id = "usersignin" class = "title3">已經有帳戶了？點此登入</div>
-                </form>
+                </ul>
                 
             </span>
         </div>
@@ -91,7 +91,6 @@
     <footer class = "footer" background-color = "Gray700"> COPYRIGHT©2021台北一日遊</footer>
     
     <script>
-        
         getuser()
         
         var sign;
@@ -182,6 +181,7 @@
             }
             ).then(function(result){
             getData(result);
+            // getuser()
             });
         }
     
@@ -271,28 +271,46 @@
                 headers: {
                 'content-type': 'application/json'}
         })
-        // .then((data) => {
-        //     if (data.ok) {
-        //         switchbutton.style.display = "none";
-        //         signout.style.display = "inline";
-        //         // switchbutton.innerHTML = "";
-        //         // switchbutton.innerHTML = "登出";
-        //     }else{
-        //         switchbutton.style.display = "inline";
-        //         signout.style.display = "none";
-        //     } 
-        // })
+        .then(response => response.json(data))
+        .then((data) => {
+            console.log(data);
+            if (data["data"]) {
+                switchbutton.style.display = "none";
+                signout.style.display = "inline";
+        // //         // switchbutton.innerHTML = "";
+        // //         // switchbutton.innerHTML = "登出";
+            }
+            // else{
+            //     switchbutton.style.display = "inline";
+            //     signout.style.display = "none";
+            // } 
+        })
         };
 
         function delete_user(){
             fetch("/api/user",{
                 headers:{
                 'content-type': 'application/json'},
+                // body: JSON.stringify(data), 
                 method:("DELETE")
             })
-            getuser();
+            console.log(data);
+            // getuser();
         };
         
+        function signup_postData (url, data){
+        fetch(url, {
+            headers: {'content-type': 'application/json'},
+            body: JSON.stringify(data), 
+            method:("POST")
+        })
+        .then(response => response.json(data))
+        .then((data) => {console.log(data)
+        // .then((data) => {
+            getuser()
+        })
+        };
+
         function patchData (url, data){
             fetch(url, {
                 headers: {
@@ -300,9 +318,10 @@
                 body: JSON.stringify(data), method:("PATCH")
             })
             .then(response => response.json(data))
-            // .then((data) => console.log(data, 'data'))
+            // .then((data) => )
             .then((data) => {
-            if (data.ok) {
+            console.log(data)
+            if (data['ok']) {
                 getuser()
                 switchbutton.style.display = "none";
                 signout.style.display = "inline";
@@ -310,25 +329,45 @@
                 // switchbutton.innerHTML = "登出";
             } 
             // else {
-            // // error 處理~~
+            // switchbutton.style.display = "inline";
+            // signout.style.display = "none";
             // }
             })
         };
+
+        
+       
+        var membersignup = document.getElementById("membersignup");
+        membersignup.addEventListener("click", function(event){
+        event.preventDefault()
+        usersign.style.display = "none";
+        var signupname =document.getElementById("signupname").value;
+        var signupemail =document.getElementById("signupemail").value;
+        var signuppassword = document.getElementById("signuppassword").value;
+        console.log(signupemail);
+        console.log("signupemail");
+        var signupdata = {"name": signupname, "email": signupemail, "password": signuppassword};
+        signup_postData("/api/user", signupdata)
+        // .then(signupdata => console.log(signupdata)) 
+
+        });
 
         var membersignin = document.getElementById("membersignin");
         membersignin.addEventListener("click", function(event){
         event.preventDefault()
         sign.style.display = "none";
-        var email =document.getElementById("email").value;
-        var password = document.getElementById("password").value;
-        // console.log(password);
-        // console.log("password");
-        var data1 = {"email": email, "password": password};
-        patchData("http://50.18.127.34:3000/api/user", data1)
-        // .then(data1 => console.log(data1)) 
+        var signinemail =document.getElementById("signinemail").value;
+        var signinpassword = document.getElementById("signinpassword").value;
+        console.log(signinpassword);
+        console.log("signinpassword");
+        var signindata = {"email": signinemail, "password": signinpassword};
+        patchData("/api/user", signindata)
+        // .then(signindata => console.log(signindata)) 
         // .catch(error => console.error(error))
         });
-       
+
+
+
         // function getlove(){
         // var dataUrl= "/api/user"
         // var xhr = new XMLHttpRequest()

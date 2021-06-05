@@ -1,3 +1,4 @@
+from os import name
 import re
 from flask import Flask
 from flask import request      
@@ -48,19 +49,26 @@ def thankyou():
 @app.route("/api/user", methods = ["GET"])
 def get_user_data():
 	if request.method == "GET":
+		print(session)
 		if "email"in session:
 			return jsonify({"data":{
 				"id":session["id"],
 				"name":session["name"],
 				"email":session["email"]
 				}
-			})
+				})
 		else:
 			return jsonify({"data":None})    			
 
 @app.route("/api/user", methods = ["POST"])
 def create_new_user():
-	mycursor.execute(f"SELECT * FROM member where email=' {request.values['email']}'")
+	data = request.get_json()
+	print(data)
+	name = data["name"]
+	email = data["email"]
+	password = data["password"]
+	print(email)
+	mycursor.execute(f"SELECT * FROM member where email={email}")
 	result = mycursor.fetchone()
 	print(result)
 	try:
@@ -68,7 +76,7 @@ def create_new_user():
 			return jsonify({"error":True, "message":"此信箱已被註冊過,註冊失敗"}),400
 		else:
 			sql = "INSERT INTO member (name, email, password) VALUES (%s, %s, %s)"
-			val = (str(request.values["name"]), str(request.values["email"]), str(request.values["password"]))
+			val = (name, email, password)
 			mycursor.execute(sql, val)
 			mydatabase.commit()
 			return jsonify({"ok":True})
@@ -113,7 +121,7 @@ def user_signin():
 	print(data)
 	# print(email)
 	# print(password)
-	mycursor.execute(f"SELECT * FROM member where email = '{email}' and password = '{password}'")
+	mycursor.execute(f"SELECT * FROM member where email = {email} and password = {password}")
 	member_result = mycursor.fetchone()
 	print(member_result)
 	try:
