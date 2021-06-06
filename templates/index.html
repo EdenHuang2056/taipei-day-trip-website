@@ -15,12 +15,15 @@
         flex-wrap: wrap;
         /* border:solid red 1px; */
         text-align:center ;
-
     }
-
-    
-
-
+    @media(min-width:360px) and (max-width:500px){
+    .button3{
+        position:absolute; left: 200px; top:242px;
+        z-index: 2;
+        width: 44px; height: 44px;
+        /* border:solid blue 1px; */
+    }
+}
 </style>
 
 </head>
@@ -28,10 +31,31 @@
 <body>
     <div class = "nav1">
         <div class = "div1">
-            <span class = "title1">台北一日遊</span>
+            <span id = "taipei" class = "title1 Cyan700" >台北一日遊</span>
             <span class = "title2">    
-                <button class = "button1">預定行程</button>
-                <button class = "button1">登入/註冊</button>
+                <button id = "booking" class = "button1">預定行程</button>
+                <button id = "signin" class = "button1">登入/註冊</button>
+                <button  id = "signout" class = "button1-1"  >登出</button>
+                <ul  action ="/api/user" id = "sign" class = "sign" method = "PATCH">
+                    <div class="arow" ></div>
+                    登入會員帳號
+                    <div id = "close" class = "close">X</div>
+                    <input id = "signinemail" type="text" class = "email" placeholder="輸入電子信箱">
+                    <input id = "signinpassword" type="text" class = "password"placeholder="輸入密碼">
+                    <button id = "membersignin" class="button2" >登入帳戶</button>
+                    <div id = "signup" class="title3">還沒有帳戶？點此註冊</div>
+                </ul>
+                <ul action = "/api/user" method = "POST" id = "usersign" class="usersign" >
+                    <div class="arow" ></div>
+                    註冊會員帳號
+                    <div id = "closed" class = close>X</div>
+                    <input id = "signupname" type="text" class = "name" name = "name" placeholder="輸入姓名">
+                    <input id = "signupemail" type="text" class = "email" name = "email" placeholder="輸入電子信箱">
+                    <input id = "signuppassword" type="text" class = "password" name = "password" placeholder="輸入密碼">
+                    <button id = "membersignup" class = "button2" >註冊新帳戶</button>
+                    <div id = "usersignin" class = "title3">已經有帳戶了？點此登入</div>
+                </ul>
+                
             </span>
         </div>
     </div>
@@ -39,17 +63,71 @@
         <span class = "text1 Cyan700">輕鬆享受台北一日悠閒</span>
         <span class = "text2">探索每個角落，體驗城市的深度體驗城市的深度旅遊行程</span>
         <input type="text" class = "input1" placeholder="輸入景點名稱查詢" id = "inputkeyword"> </input>
-        <button id = "search" class = "button2 " ><img src="../static/icon_search.png"> </button>
+        <button id = "search" class = "button3 " ><img src="../static/icon_search.png"> </button>
         <img class = "welcome1" src= "../static/welcome 1.png"></img>
     
     </div>
-    
-    <main id = "content">
-        
-    </main>
+    <main id = "content"></main>
     <footer class = "footer" > COPYRIGHT©2021台北一日遊</footer>
     
 <script>
+    getuser()
+
+
+    var sign;
+    var usersign;
+    var switchbutton;
+    var signout;
+    window.onload = function(){
+    sign = document.getElementById("sign");
+    usersign = document.getElementById("usersign");
+    switchbutton = document.getElementById("signin");
+    signout = document.getElementById("signout");
+    };
+
+    var taipei = document.getElementById("taipei");
+    taipei.addEventListener("click", function(){
+    location.href = "/";
+    });
+
+    var signin = document.getElementById("signin");
+    signin.addEventListener("click", function(){
+    sign.style.display = "block";
+    usersign.style.display = "none";
+
+    });
+    var closebox = document.getElementById("close");
+    closebox.addEventListener("click", function(){
+    sign.style.display = "none";
+    usersign.style.display = "none";
+    });
+    
+    var signup = document.getElementById("signup");
+    signup.addEventListener("click", function(){
+    sign.style.display = "none";
+    usersign.style.display = "block";
+    });
+
+    var close2 = document.getElementById("closed");
+    close2.addEventListener("click", function(){
+    sign.style.display = "none";
+    usersign.style.display = "none";
+    });
+
+    var usersignin = document.getElementById("usersignin");
+    usersignin.addEventListener("click", function(){
+    usersign.style.display = "none";
+    sign.style.display = "block";
+    });
+
+    var switchbutton = document.getElementById("signin");
+    var signout = document.getElementById("signout");
+
+    signout.addEventListener("click", function(){
+    switchbutton.style.display = "inline";
+    signout.style.display = "none";
+    delete_user();
+    });
 
     var currentPage = 0;
     let result;
@@ -128,7 +206,7 @@
     // // document.body.appendChild(content);
     // });
 
-
+    
 
     function getData(result){
         
@@ -208,6 +286,98 @@
     var content = document.getElementById("content").appendChild(bigbox);
     }
     }
+    function getuser(){
+        fetch("/api/user", {
+            headers: {
+            'content-type': 'application/json'}
+        })
+        .then(response => response.json(data))
+        .then((data) => {
+        if (data["data"]){
+            switchbutton.style.display = "none";
+            signout.style.display = "inline";
+        }
+       
+    })
+    };
+
+    function delete_user(){
+        fetch("/api/user",{
+            headers:{
+            'content-type': 'application/json'},
+            method:("DELETE")
+        })
+        // getuser();
+    };
+
+    function signup_postData (url, data){
+        fetch(url, {
+            headers: {
+                'content-type': 'application/json'},
+            body: JSON.stringify(data), 
+            method:("POST")
+        })
+        .then(response => response.json(data))
+        // .then((data) => console.log(data, 'data'))
+        .then((data) => {
+            getuser()
+        })
+    };
+
+
+    function signin_patchData (url, data){
+        fetch(url, {
+            headers: {
+                'content-type': 'application/json'},
+            body: JSON.stringify(data), method:("PATCH")
+        })
+        .then(response => response.json(data))
+        // .then((data) => console.log(data, 'data'))
+        .then((data) => {
+        if (data["ok"]) {
+            getuser()
+            // document.querySelector(".button1").style.display = "none"
+            switchbutton.style.display = "none";
+            signout.style.display = "inline";
+            // switchbutton.innerHTML = "";
+            // switchbutton.innerHTML = "登出";
+        } 
+        // else 
+        // // error 處理~~
+        // }
+        })
+    };
+
+    var membersignup = document.getElementById("membersignup");
+    membersignup.addEventListener("click", function(event){
+    event.preventDefault()
+    usersign.style.display = "none";
+    var signupname =document.getElementById("signupname").value;
+    var signupemail =document.getElementById("signupemail").value;
+    var signuppassword = document.getElementById("signuppassword").value;
+    console.log(signupemail);
+    console.log("signupemail");
+    var signupdata = {"name": signupname, "email": signupemail, "password": signuppassword};
+    signup_postData("/api/user", signupdata)
+    // .then(signupdata => console.log(signupdata)) 
+
+    });
+
+    var membersignin = document.getElementById("membersignin");
+    membersignin.addEventListener("click", function(event){
+    event.preventDefault()
+    sign.style.display = "none";
+    var signinemail =document.getElementById("signinemail").value;
+    var signinpassword = document.getElementById("signinpassword").value;
+    console.log(signinpassword);
+    console.log("signinpassword");
+    var signindata = {"email": signinemail, "password": signinpassword};
+    signin_patchData("/api/user", signindata)
+    // .then(signindata => console.log(signindata)) 
+    // .catch(error => console.error(error))
+    });
+
+    
     
 </script>
 

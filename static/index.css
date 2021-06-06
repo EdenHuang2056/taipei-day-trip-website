@@ -12,8 +12,8 @@ body{
 
 .div1{
     max-width: 1920px;
-    height: 34px;
-    margin:0 auto;
+    height: 54px;
+    margin:20px auto;
     display: flex;
     justify-content: space-between;
 }
@@ -21,6 +21,7 @@ body{
 .title1{
     font-size: 30px;
     padding:7px 0;
+    cursor: pointer;
 }
 
 .title2{
@@ -29,9 +30,85 @@ body{
 }
 
 .button1{
-    font-size: 21px;
+    font-size: 21px;cursor: pointer;
+    height: 35px;
+    width: 110px;
+}
+
+.button1-1{
+    font-size: 21px;cursor: pointer;
+    height: 35px;
+    width: 110px;
+    display: none;
+}
+
+.sign{
+    width: 200px;
+    height: 250px;
+    background-color: white;
+    box-shadow: 0px 0px 100px;
+    display: none;
+    z-index: 3;
+    position: absolute;
+    top:100px; left:50%; transform:translate(-100px,0px);
+    margin: 20px auto;
+    padding: 0px;
 
 }
+
+.arow{
+    height: 10px;
+    background-color: #337788 ;
+    margin-bottom: 5px;
+}
+
+.close{
+    position: absolute; top:7px ;right:2px;
+    cursor: pointer; 
+}
+
+.name{
+    margin: 10px auto;
+}
+
+.email{
+    margin: 10px auto;
+}
+
+.password{
+    margin: 10px auto;
+}
+.title3{
+    cursor: pointer;
+}
+
+.button2{
+    height: 40px;
+    width: 160px;
+    background-color: #448899; 
+    color:white;
+    margin: 10px auto;
+} 
+
+.usersign{
+    width: 200px;
+    height: 250px;
+    background-color: white;
+    box-shadow: 0px 0px 100px;
+    display: none;
+    z-index: 5;
+    position: absolute;
+    top:100px; left:50%; transform:translate(-100px,0px);
+    margin: 20px auto;
+    padding: 0px;
+
+}
+
+.closed{
+    position: absolute; top:0px ;right:2px;
+    cursor: pointer;
+}
+
 
 .head{
     max-width: 1920px; height: 320px;
@@ -56,7 +133,7 @@ body{
     position: absolute; left: 370px; top:242px; 
 }
 
-.button2{
+.button3{
     position:absolute; left: 800px; top:242px;
     z-index: 2;
     width: 60px; height: 55px;
@@ -192,6 +269,7 @@ main{
         position: absolute; top:242px; left:0px ;
     }
     
+
     .button2{
         position:absolute; left: 200px; top:242px;
         z-index: 2;
