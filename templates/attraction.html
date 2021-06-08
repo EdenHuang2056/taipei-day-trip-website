@@ -161,7 +161,7 @@
         if (data["data"]) {
             window.location.href = "/booking"
         }else{
-            window.location.href = "/"
+            sign.style.display = "block";
         }
     })
 })
@@ -488,16 +488,16 @@
             getuser()
             switchbutton.style.display = "none";
             signout.style.display = "inline";
-            signinerror.style.display = "none";
+            // signinerror.style.display = "none";
 
             // switchbutton.innerHTML = "";
             // switchbutton.innerHTML = "登出";
         } 
-        else {
-            signinerror.style.display = "block";
+        // else {
+        //     signinerror.style.display = "block";
         // switchbutton.style.display = "inline";
         // signout.style.display = "none";
-        }
+        // }
         })
         };
 
