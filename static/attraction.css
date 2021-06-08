@@ -3,6 +3,17 @@ body{
     margin:0px;text-align: center;
 }
 
+.gray{
+    max-width: 1920px;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0.25;
+    display: none;
+    position: absolute;
+    z-index: 2;
+}
+
 .nav1{
     max-width: 1920px;
     height: 54px;
@@ -40,6 +51,12 @@ body{
     font-size: 21px;cursor: pointer;
     height: 35px;
     width: 110px;
+    display: none;
+}
+
+.error{
+    color: red;
+    font-size: 10px;
     display: none;
 }
 
@@ -103,13 +120,6 @@ body{
     padding: 0px;
 
 }
-
-.closed{
-    position: absolute; top:0px ;right:2px;
-    cursor: pointer;
-}
-
-
 
 .bigbox{
     max-width: 1200px;
@@ -275,6 +285,8 @@ body{
     text-align: center;
     align-items: center;
     background-color: gray;
+    margin-top:100px
+
 }
 
 @media(min-width:360px) and (max-width:500px){

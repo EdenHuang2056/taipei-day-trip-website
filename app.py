@@ -1,5 +1,4 @@
-from os import name
-import re
+# from os import name
 from flask import Flask
 from flask import request      
 from flask import redirect     
@@ -7,6 +6,7 @@ from flask import render_template
 from flask import session
 from flask import url_for
 from flask import jsonify
+from flask.json import JSONDecoder
 import mysql.connector
 import json
 
@@ -25,8 +25,7 @@ mydatabase = mysql.connector.connect(
     database="travel_site"
 )
 
-mycursor = mydatabase.cursor()
-
+mycursor = mydatabase.cursor(buffered=True)
 
 # Pages
 @app.route("/")
@@ -44,6 +43,79 @@ def booking():
 @app.route("/thankyou")
 def thankyou():
 	return render_template("thankyou.html")
+
+@app.route("/api/booking", methods = ["GET"])
+def search_order():
+	print(session)
+	if "order_email"in session:
+		email = session["order_email"]
+		attraction_id = session["order_id"]
+		mycursor.execute(f"SELECT * FROM booking_order where order_email={email} and attraction_id = {attraction_id}")
+		order_result = mycursor.fetchone()
+		print(order_result)
+		id = order_result[1]
+		date = order_result[2]
+		time = order_result[4]
+		price = order_result[3]
+
+		mycursor.execute(f"SELECT * FROM spot where id={id}")
+		order_result1 = mycursor.fetchone()
+
+		name = order_result1[1]
+		address = order_result1[4]
+		image = order_result1[9]
+		image = image.split(",")
+		image = image[0]
+
+		print(image)
+		return jsonify({"data":{
+			"attraction":{"id":id, "name":name, "address":address, "image":image},
+			"date":date,
+			"time":time,
+			"price":price}})
+		
+	else:
+		return jsonify({"data":None})    			
+
+
+@app.route("/api/booking", methods = ["POST"])
+def booking_order():
+
+	detail = request.get_json()
+	print(detail)
+	attraction_id = detail["attraction_id"]
+	date = detail["date"]
+	price = detail["price"]
+	time = detail["time"]
+	email = detail["email"]
+	name = detail["name"]
+	
+	session["order_email"] = email
+	session["order_id"] = attraction_id
+
+	sql1 = "INSERT INTO booking_order (attraction_id, date, price, time, order_email, order_name) VALUES (%s, %s, %s, %s, %s, %s)"
+	val1 = (attraction_id, date, price, time, email, name)
+	mycursor.execute(sql1, val1)
+	mydatabase.commit()
+	
+	print("1")
+	return jsonify({"ok":True})
+
+
+@app.route("/api/booking", methods = ["DELETE"])
+def delete_order():
+
+	if "order_email" in session:
+		session.pop("order_email")
+		session.pop("order_id")
+		# get_email = session["email"]
+		# print(get_email)
+		# mycursor.execute(f"DELETE FROM booking_order where email = {'get_email'} ")
+		# member_result = mycursor.fetchall()
+		# print(member_result)
+		# mydatabase.commit()
+		return jsonify({"ok":True})
+
 
 
 @app.route("/api/user", methods = ["GET"])
