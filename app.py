@@ -50,7 +50,7 @@ def search_order():
 	if "order_email"in session:
 		email = session["order_email"]
 		attraction_id = session["order_id"]
-		mycursor.execute(f"SELECT * FROM booking_order where order_email={email} and attraction_id = {attraction_id}")
+		mycursor.execute(f"SELECT * FROM booking_order where order_email='{email}' and attraction_id = '{attraction_id}' ")
 		order_result = mycursor.fetchone()
 		print(order_result)
 		id = order_result[1]
@@ -58,7 +58,7 @@ def search_order():
 		time = order_result[4]
 		price = order_result[3]
 
-		mycursor.execute(f"SELECT * FROM spot where id={id}")
+		mycursor.execute(f"SELECT * FROM spot where id='{id}'")
 		order_result1 = mycursor.fetchone()
 
 		name = order_result1[1]
@@ -98,7 +98,7 @@ def booking_order():
 	mycursor.execute(sql1, val1)
 	mydatabase.commit()
 	
-	print("1")
+	# print("1")
 	return jsonify({"ok":True})
 
 
@@ -140,7 +140,7 @@ def create_new_user():
 	email = data["email"]
 	password = data["password"]
 	print(email)
-	mycursor.execute(f"SELECT * FROM member where email={email}")
+	mycursor.execute(f"SELECT * FROM member where email= '{email}' ")
 	result = mycursor.fetchone()
 	print(result)
 	try:
@@ -193,7 +193,7 @@ def user_signin():
 	print(data)
 	# print(email)
 	# print(password)
-	mycursor.execute(f"SELECT * FROM member where email = {email} and password = {password}")
+	mycursor.execute(f"SELECT * FROM member where email = '{email}' and password = '{password}'")
 	member_result = mycursor.fetchone()
 	print(member_result)
 	try:

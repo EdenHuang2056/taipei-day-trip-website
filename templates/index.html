@@ -385,10 +385,12 @@
         })
     };
 
+    // 使用者註冊
     var membersignup = document.getElementById("membersignup");
     membersignup.addEventListener("click", function(event){
     event.preventDefault()
     usersign.style.display = "none";
+    gray.style.display = "none"
     var signupname =document.getElementById("signupname").value;
     var signupemail =document.getElementById("signupemail").value;
     var signuppassword = document.getElementById("signuppassword").value;
@@ -400,6 +402,7 @@
 
     });
 
+    // 使用者登入
     var membersignin = document.getElementById("membersignin");
     membersignin.addEventListener("click", function(event){
     event.preventDefault()
