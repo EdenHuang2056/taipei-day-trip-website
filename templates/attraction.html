@@ -356,6 +356,7 @@
         })
         .then(response => response.json(data))
         .then((data) => {
+            console.log(data);
         if (data["data"]){
             switchbutton.style.display = "none";
             signout.style.display = "inline";
@@ -387,8 +388,8 @@
         console.log(order_money);
         console.log(order_day);
         console.log(id);
-        order_detail = {"attraction_id":id, "date": order_day, "price": order_money, "time": order_time, "email": order_email, "name": order_name}
-        create_order("/api/booking", order_detail)
+        order_detail = {"attraction_id":id, "date": order_day, "price": order_money, "time": order_time, "email": order_email, "name": order_name};
+        create_order("/api/booking", order_detail);
     };
 
 
@@ -405,7 +406,7 @@
             // check_order()
             if(data["ok"]){
                 window.location.href = "/booking"
-            }
+            };
 
         })
     };
