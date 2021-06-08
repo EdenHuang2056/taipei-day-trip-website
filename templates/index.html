@@ -37,7 +37,7 @@
                 <button id = "booking" class = "button1">預定行程</button>
                 <button id = "signin" class = "button1">登入/註冊</button>
                 <button  id = "signout" class = "button1-1"  >登出</button>
-                <div id = "error" class = "error" > 信箱或密碼輸入錯誤</div>
+                <!-- <div id = "error" class = "error" > 信箱或密碼輸入錯誤</div> -->
                 <ul  action ="/api/user" id = "sign" class = "sign" method = "PATCH">
                     <div class="arow" ></div>
                     登入會員帳號
@@ -356,7 +356,7 @@
         })
     };
 
-    var error = document.getElementById("error");
+    // var error = document.getElementById("error");
 
 
     function signin_patchData (url, data){
@@ -373,15 +373,15 @@
             // document.querySelector(".button1").style.display = "none"
             switchbutton.style.display = "none";
             signout.style.display = "inline";
-            error.style.display = "none";
+            // error.style.display = "none";
 
             // switchbutton.innerHTML = "";
             // switchbutton.innerHTML = "登出";
         } 
-        else {
-            error.style.display = "block";
+        // else {
+        //     error.style.display = "block";
 
-        }
+        // }
         })
     };
 
