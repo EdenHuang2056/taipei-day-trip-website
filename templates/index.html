@@ -189,7 +189,7 @@
         {   
             // console.log(response);
             // console.log(src);
-            return response.json();
+        return response.json();
         }
         ).then(function(result)
         {
@@ -248,7 +248,7 @@
     function getData(result){
         
         var datalength = result.data.length;
-        console.log(datalength);
+        // console.log(datalength);
 
         if(datalength==0){
             document.getElementById("bigbox").innerHTML = "查無景點資料";
