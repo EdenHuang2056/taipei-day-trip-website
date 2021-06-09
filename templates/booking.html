@@ -2,7 +2,7 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="../static/color_size.css" media="all"/>
-    <link rel="stylesheet" type="text/css" href="../static/attraction.css" media="all"/>
+    <link rel="stylesheet" type="text/css" href="../static/booking.css" media="all"/>
     <meta charset = "utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
     <title></title>
@@ -13,6 +13,7 @@
 
 </head>
 <body>
+    <div id = "gray" class = "gray" ></div>
     <div class = "nav1">
         <div class = "div1">
             <span id = "taipei" class = "title1 Cyan700" >台北一日遊</span>
@@ -20,43 +21,274 @@
                 <button id = "booking" class = "button1">預定行程</button>
                 <button id = "signin" class = "button1">登入/註冊</button>
                 <button  id = "signout" class = "button1-1"  >登出</button>
-                <form  action ="/api/user" id = "sign" class = "sign" method = "PATCH">
+                <!-- <div id = "error" class = "error" > 信箱或密碼輸入錯誤</div> -->
+                <ul  action ="/api/user" id = "sign" class = "sign" method = "PATCH">
                     <div class="arow" ></div>
                     登入會員帳號
                     <div id = "close" class = "close">X</div>
-                    <input id = "email" type="text" class = "email" placeholder="輸入電子信箱">
-                    <input id = "password" type="text" class = "password"placeholder="輸入密碼">
+                    <input id = "signinemail" type="text" class = "email" placeholder="輸入電子信箱">
+                    <input id = "signinpassword" type="text" class = "password"placeholder="輸入密碼">
                     <button id = "membersignin" class="button2" >登入帳戶</button>
                     <div id = "signup" class="title3">還沒有帳戶？點此註冊</div>
-                </form>
-                <form action = "/api/user" method = "POST" id = "usersign" class="usersign" >
+                </ul>
+                <ul action = "/api/user" method = "POST" id = "usersign" class="usersign" >
                     <div class="arow" ></div>
                     註冊會員帳號
                     <div id = "closed" class = close>X</div>
-                    <input type="text" class = "name" name = "name" placeholder="輸入姓名">
-                    <input type="text" class = "email" name = "email" placeholder="輸入電子信箱">
-                    <input type="text" class = "password" name = "password" placeholder="輸入密碼">
+                    <input id = "signupname" type="text" class = "name" name = "name" placeholder="輸入姓名">
+                    <input id = "signupemail" type="text" class = "email" name = "email" placeholder="輸入電子信箱">
+                    <input id = "signuppassword" type="text" class = "password" name = "password" placeholder="輸入密碼">
                     <button id = "membersignup" class = "button2" >註冊新帳戶</button>
                     <div id = "usersignin" class = "title3">已經有帳戶了？點此登入</div>
-                </form>
+                </ul>
                 
             </span>
         </div>
     </div>
-    <hr/>
-    <div>
-
+    <hr class = "line1" />
+    <div id = "titlename" class = "title Body Gray800" >您好，，待預定的行程如下:</div>
+    <div id = "no_order" class = "no_order Body" >目前沒有預定行程</div>
+    <div id = "container" class = "container" >
+        <span id = "photobox" class = "photobox" >
+            <!-- <img src="https://thumb.ac-illust.com/t/60/6049b27c4ece5aa4afb115dff772da68_t.jpeg" alt=""> -->
+        </span>
+        <span class = "contentbox">
+            <div id = "title" class = "title_text Body Bold Cyan800" >台北一日遊：</div>
+            <div id = "date" class = "text Body" >日期：</div>
+            <div id = "time" class = "text Body" >時間：</div>
+            <div id = "money" class = "text Body" >費用：</div>
+            <div id = "address" class = "text Body" >地點：</div>
+        </span>
     </div>
-    <hr/>
-    <div>
+    <button id = "delete_pic" class="delete_pic" > <img src="../static/icon_delete.png" ></button>
 
+    <hr id = "line" class = "line2" />
+    <div id = "inform_box" class = "inform_box" >
+        <div class = "title_text Button Bold" >您的聯絡資訊</div>
+        <div class = "input_box" >
+            聯絡姓名：<input id = "name" class = "input_text Body" >
+        </div>
+        <div class = "input_box" >
+            聯絡信箱：<input id = "email" class = "input_text Body" type="text">
+        </div>
+        <div class = "input_box" >
+            手機號碼：<input class = "input_text Body" type="text">
+
+        </div>
+        <div class = "input_box" >請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</div>
     </div>
-    <hr/>
-    <div>
-
+    <hr id = "line2" class = "line2" />
+    <div id = "inform_box2" class = "inform_box" >
+        <div class = "title_text Button Bold" >信用卡付款資訊</div>
+        <div class = "input_box" >
+            卡片號碼：<input class = "input_text Body" type="text" placeholder="**** **** **** ****">
+        </div>
+        <div class = "input_box" >
+            過期時間：<input class = "input_text Body" type="text" placeholder="MM/YY">
+        </div>
+        <div class = "input_box" >
+            驗證密碼：<input class = "input_text Body" type="text" placeholder="CVV">
+        </div>
     </div>
 
-    <hr/>
+    <hr id = "line3" class = "line2" />
+    <div id = "inform_box3" class = "inform_box" >
+        <div id = "total" class = "totalbox" >總價：新台幣  元</div>
+        <div class = "totalbox" >
+            <button class = "button3" >確認訂購並付款</button>
+        </div>
+    </div>
+    <main>
+
+    </main>
+    <footer class = "footer" background-color = "Gray700"> COPYRIGHT©2021台北一日遊</footer>
+
+<script>
+
+    check_order();
+    getuser();
+
+
+    var sign;
+    var usersign;
+    var switchbutton;
+    var gray;
+    var signinerror;
+    window.onload = function(){
+    sign = document.getElementById("sign");
+    usersign = document.getElementById("usersign");
+    switchbutton = document.getElementById("signin");
+    gray = document.getElementById("gray");
+    signinerror = document.getElementById("signinerror");
+    }
     
 
+    
 
+   
+
+
+    var ordermember;
+    var data;
+    function check_order(){
+        fetch("/api/booking", {
+            headers:{'content-type': 'application/json'}
+        })
+        .then(response => response.json(data))
+        .then((data) =>{
+        ordermember = data;
+        console.log(ordermember);
+        if (ordermember["data"]==null){
+
+            var no_order = document.getElementById("no_order");
+            var container = document.getElementById("container");
+            var inform_box = document.getElementById("inform_box");
+            var inform_box2 = document.getElementById("inform_box2");
+            var inform_box3 = document.getElementById("inform_box3");
+            var delete_pic = document.getElementById("delete_pic");
+            var line = document.getElementById("line");
+            var line2 = document.getElementById("line2");
+            var line3 = document.getElementById("line3");
+
+            no_order.style.display = "block"
+            container.style.display = "none";
+            inform_box.style.display = "none";
+            inform_box2.style.display = "none";
+            inform_box3.style.display = "none";
+            delete_pic.style.display = "none";
+            line.style.display = "none";
+            line2.style.display = "none";
+            line3.style.display = "none";
+
+
+            }else{
+            var title = ordermember["data"]["attraction"]["name"];
+            var date = ordermember["data"]["date"];
+            var time;
+            if(ordermember["data"]["time"]=="afternoon"){
+                time = "下午2點到晚上9點";
+            }else{
+                time = "早上9點到下午4點";
+            }
+            var money = ordermember["data"]["price"];
+            var address = ordermember["data"]["attraction"]["address"];
+            
+            var photobox = document.getElementById("photobox");
+            var photo = document.createElement("img");
+            photo.src = ordermember["data"]["attraction"]["image"];
+            photobox.appendChild(photo);
+
+            document.getElementById("title").innerText = "台北一日遊：" + title;
+            document.getElementById("date").innerText = "日期：" + date;
+            document.getElementById("time").innerText = "時間：" + time;
+            document.getElementById("money").innerText = "費用：新台幣" + money + "元";
+            document.getElementById("address").innerText = "地點：" + address;
+            document.getElementById("total").innerText = "總價：新台幣" + money + "元";
+            // document.getElementById("email").innerHTML = "查無景點資料";
+        }
+        }
+        )
+    }
+
+    var email_data
+
+    function getuser(){
+        fetch("/api/user", {
+            headers: {'content-type': 'application/json'}
+        })
+        .then(response => response.json(data))
+        .then((data) => {
+        console.log(data);
+        signinmember = data;
+
+        var name = signinmember["data"]["name"];
+        var email = signinmember["data"]["email"];
+        email_data = {"email":email};
+
+        document.getElementById("titlename").innerText = "您好，" + name + "，待預定的行程如下：";
+        document.getElementById("name").value = name;
+        document.getElementById("email").value = email;
+
+        if (data["data"]) {
+            switchbutton.style.display = "none";
+            signout.style.display = "inline";
+    // //         // switchbutton.innerHTML = "";
+    // //         // switchbutton.innerHTML = "登出";
+        }
+        // else{
+            // switchbutton.style.display = "inline";
+            // signout.style.display = "none";
+        // } 
+        // return signinmember;
+        })
+        };
+
+    var delete_pic = document.getElementById("delete_pic");
+    delete_pic.addEventListener("click",function(){
+        delete_order();
+        });
+
+        // 刪除行程
+        function delete_order(){
+        fetch("/api/booking",{
+            headers:{
+            'content-type': 'application/json'},
+            // body: JSON.stringify(data), 
+            method:("DELETE")
+        })
+            window.location.href = "/"
+   
+        // console.log(data);
+        // getuser();
+    };
+
+
+    // 預定行程
+    var booking = document.getElementById("booking");
+    booking.addEventListener("click", function(){
+        fetch("/api/user", {
+            headers: {
+            'content-type': 'application/json'}
+        })
+        .then(response => response.json(data))
+        .then((data) => {
+        console.log(data);
+        signinmember = data;
+        if (data["data"]) {
+            window.location.href = "/booking"
+        }else{
+            sign.style.display = "block";
+        }
+    })
+    });
+
+    // 台北一日遊首頁
+    var taipei = document.getElementById("taipei");
+    taipei.addEventListener("click", function(){
+    location.href = "/";
+    });
+    
+    var signout;
+    signout = document.getElementById("signout");
+    signout.addEventListener("click", function(){
+    switchbutton.style.display = "inline";
+    signout.style.display = "none";
+    gray.style.display = "none"
+    delete_user();
+    location.href = "/";
+    });
+
+    function delete_user(){
+        fetch("/api/user",{
+            headers:{
+            'content-type': 'application/json'},
+            method:("DELETE")
+        })
+        // getuser();
+    };
+
+</script>
+
+</body>
+
+</html>

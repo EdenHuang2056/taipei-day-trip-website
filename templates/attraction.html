@@ -5,6 +5,7 @@
     <link rel="stylesheet" type="text/css" href="../static/attraction.css" media="all"/>
     <meta charset = "utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <link rel="shortcut icon" href="#" />
     <title></title>
 
 <style>
@@ -12,6 +13,7 @@
 
 </head>
 <body>
+    <div id = "gray" class = "gray" ></div>
     <div class = "nav1">
         <div class = "div1">
             <span id = "taipei" class = "title1 Cyan700" >台北一日遊</span>
@@ -19,12 +21,13 @@
                 <button id = "booking" class = "button1">預定行程</button>
                 <button id = "signin" class = "button1">登入/註冊</button>
                 <button  id = "signout" class = "button1-1"  >登出</button>
+                <!-- <div id = "signinerror" class = "signinerror" > 信箱或密碼輸入錯誤</div> -->
                 <ul  action ="/api/user" id = "sign" class = "sign" method = "PATCH">
                     <div class="arow" ></div>
                     登入會員帳號
                     <div id = "close" class = "close">X</div>
-                    <input id = "signinemail" type="text" class = "email" placeholder="輸入電子信箱">
-                    <input id = "signinpassword" type="text" class = "password"placeholder="輸入密碼">
+                    <input id = "signinemail"  class = "email" placeholder="輸入電子信箱">
+                    <input id = "signinpassword"  class = "password"placeholder="輸入密碼">
                     <button id = "membersignin" class="button2" >登入帳戶</button>
                     <div id = "signup" class="title3">還沒有帳戶？點此註冊</div>
                 </ul>
@@ -32,9 +35,9 @@
                     <div class="arow" ></div>
                     註冊會員帳號
                     <div id = "closed" class = close>X</div>
-                    <input id = "signupname" type="text" class = "name" name = "name" placeholder="輸入姓名">
-                    <input id = "signupemail" type="text" class = "email" name = "email" placeholder="輸入電子信箱">
-                    <input id = "signuppassword" type="text" class = "password" name = "password" placeholder="輸入密碼">
+                    <input id = "signupname"  class = "name" name = "name" placeholder="輸入姓名">
+                    <input id = "signupemail"  class = "email" name = "email" placeholder="輸入電子信箱">
+                    <input id = "signuppassword"  class = "password" name = "password" placeholder="輸入密碼">
                     <button id = "membersignup" class = "button2" >註冊新帳戶</button>
                     <div id = "usersignin" class = "title3">已經有帳戶了？點此登入</div>
                 </ul>
@@ -55,25 +58,25 @@
                 <div class = "btm_sliders" id = "btm_sliders"></div>
             </div>    
         </div>
-        <div class = "box">
+        <div class = "box" action = "/api/booking" method = "POST">
             <div class = "spotname Gray800 Header3 Bold" id = "name">平安鐘</div>
             <div class = "type Gray800 Body" id = "type">公共場所</div>
-            <div class = "date" id = "date">
+            <div id = "date" class = "date" >
                 <div class = "text1 Gray800 Body Bold">訂購導覽行程</div>
                 <div class = "text1 Gray800 Body">以此景點為中心的一日行程，帶您探索城市角落故事</div>
                 <div class = "text1 Gray800 Body">選擇日期：
-                    <input class = "input1" type="date" name="bday" id=""></input>
+                    <input id="order_date" class = "input1" type="date" name="bday" ></input>
                 </div>
                 <div class = "text1 Gray800 Body">選擇時間：
-                    <input class = "input2" type="radio" name = "time" value = "2000" id = "morning">上半天
+                    <input id = "morning" class = "input2" type="radio" name = "bookingtime" value = "2000">上半天
                     <lable></lable>
-                    <input class = "input2" type="radio" name = "time" value = "2500" id = "evening">下半天
+                    <input id = "evening" class = "input2" type="radio" name = "bookingtime" value = "2500">下半天
                     <lable></lable>
                 </div>
                 <div class = "text1 Gray800 Body">導覽費用：
                     <span id = "howmuch" >新台幣    元</span>
                 </div>
-                    <button class = "button3 Button">開始預定行程</button>  
+                    <button id = "booking_button" class = "button3 Button" type = "button">開始預定行程</button>  
             </div>
         </div>
     </div>
@@ -90,215 +93,376 @@
     </main>
     <footer class = "footer" background-color = "Gray700"> COPYRIGHT©2021台北一日遊</footer>
     
-    <script>
-        getuser()
-        
-        var sign;
-        var usersign;
-        var switchbutton;
-        var signout;
-        window.onload = function(){
-        sign = document.getElementById("sign");
-        usersign = document.getElementById("usersign");
-        switchbutton = document.getElementById("signin");
-        signout = document.getElementById("signout");
-        };
-        
-        var taipei = document.getElementById("taipei");
-        taipei.addEventListener("click", function(){
-        location.href = "/";
-        });
+<script>
+    getuser()
 
-        var signin = document.getElementById("signin");
-        signin.addEventListener("click", function(){
-        sign.style.display = "block";
-        usersign.style.display = "none";
 
-        });
-        var closebox = document.getElementById("close");
-        closebox.addEventListener("click", function(){
-        sign.style.display = "none";
-        usersign.style.display = "none";
-        });
-        
-        var signup = document.getElementById("signup");
-        signup.addEventListener("click", function(){
-        sign.style.display = "none";
-        usersign.style.display = "block";
-        });
-
-        var close2 = document.getElementById("closed");
-        close2.addEventListener("click", function(){
-        sign.style.display = "none";
-        usersign.style.display = "none";
-        });
-
-        var usersignin = document.getElementById("usersignin");
-        usersignin.addEventListener("click", function(){
-        usersign.style.display = "none";
-        sign.style.display = "block";
-        });
-
-        
-        var switchbutton = document.getElementById("signin");
-        var signout = document.getElementById("signout");
-
-        signout.addEventListener("click", function(){
-        switchbutton.style.display = "inline";
-        signout.style.display = "none";
-        delete_user();
-        });
-        // var membersignup = document.getElementById("membersignup");
-        // membersignup.addEventListener("click", function(){
-        // usersign.style.display = "none";
-        // sign.style.display = "none";
-        // });
-
-        url = location.href;
-        url = url.split("/");
-        var id = url[4];
-
-        var currentPage = 0;
-        let result;
-        let data;
-        let bigbox;
-        let box;
-        let windowHeight;
-        var key_word = null;
-        var web;
-       
+    // function check_money(){
+    //     var radios = document.getElementByName("time");
+    //     for (var l = 0; l < radios.length; l++){
+    //         if (radios[l].checked) {
+    //             time_value = radios[l].value;
+    //             console.log(time_value);
+    //         };
+    //     };
+    // };
     
-        bigbox = document.createElement("div");
-        bigbox.className = "bigbox";
-        bigbox.id = "bigbox";
+    // function booking_spot(){
+    //     check_money();
         
-        
-        function researchData(id){
-            let src = "http://50.18.127.34:3000/api/attraction/"+id;
-            // console.log(src);
-            fetch(src).then(function(response){   
-                return response.json();
-            }
-            ).then(function(result){
-            getData(result);
-            // getuser()
-            });
+    // };
+    
+
+    
+
+
+
+
+    var sign;
+    var usersign;
+    var switchbutton;
+    var signout;
+    var gray;
+    // var signinerror;
+    window.onload = function(){
+    sign = document.getElementById("sign");
+    usersign = document.getElementById("usersign");
+    switchbutton = document.getElementById("signin");
+    signout = document.getElementById("signout");
+    gray = document.getElementById("gray");
+    // signinerror = document.getElementById("signinerror");
+
+    };
+
+    // 台北一日遊首頁
+    var taipei = document.getElementById("taipei");
+    taipei.addEventListener("click", function(){
+    location.href = "/";
+    });
+
+    // 登入／註冊
+    var signin = document.getElementById("signin");
+    signin.addEventListener("click", function(){
+    sign.style.display = "block";
+    usersign.style.display = "none";
+    gray.style.display = "block"
+    });
+
+    // 預定行程
+    var booking = document.getElementById("booking");
+    booking.addEventListener("click", function(){
+        fetch("/api/user", {
+            headers: {
+            'content-type': 'application/json'}
+        })
+        .then(response => response.json(data))
+        .then((data) => {
+        console.log(data);
+        signinmember = data;
+        if (data["data"]) {
+            window.location.href = "/booking"
+        }else{
+            sign.style.display = "block";
         }
+    })
+})
+    // 關閉登入視窗
+    var closebox = document.getElementById("close");
+    closebox.addEventListener("click", function(){
+    sign.style.display = "none";
+    usersign.style.display = "none";
+    gray.style.display = "none"
+    });
     
-        researchData(id);
+    // 登入切換到註冊
+    var signup = document.getElementById("signup");
+    signup.addEventListener("click", function(){
+    sign.style.display = "none";
+    usersign.style.display = "block";
+    gray.style.display = "block"
+    });
 
-        function getData(result){
-            
-            // console.log(result.data);
-            let title = result.data.name;
-            let description = result.data.description;
-            let type = result.data.category;
-            let address = result.data.address;
-            let transport = result.data.transport;
-            let mrt = result.data.mrt;
-            web = result.data.images;
+    // 關閉註冊視窗
+    var close2 = document.getElementById("closed");
+    close2.addEventListener("click", function(){
+    sign.style.display = "none";
+    usersign.style.display = "none";
+    gray.style.display = "none"
+    });
 
-            // var photo = document.getElementById("images");
-            for (let j = 0; j < web.length; j++){
-            var image = document.createElement("img");
-            image.src = web[j];
-            document.getElementById("images").appendChild(image);
-            }
-            
-            for (let k = 1; k < web.length+1; k++){
-            let btmid = "btm"+k
-            var btm_slider = document.createElement("span");
-            btm_slider.id = btmid;
-            btm_slider.addEventListener("click", function(){btm_slide(k)});
-            var sliders = document.querySelectorAll(".btm_sliders span");
+    // 會員註冊
+    var usersignin = document.getElementById("usersignin");
+    usersignin.addEventListener("click", function(){
+    usersign.style.display = "none";
+    sign.style.display = "block";
+    gray.style.display = "block"
+    });
 
-            // var idgetclick = document.getElementById("btm"+k);
-            // console.log(idgetclick);
-            // idgetclick.addEventListener("click", btm_slide(k));
-            // btm_slider.onclickName = "btm_slide(j+1)";
-            // btm_slider.innerHTML = "DEMO";
-            document.getElementById("btm_sliders").appendChild(btm_slider);  
-            } 
-            side_slide_1 = document.getElementById("side_slide_1");
-            side_slide_1.addEventListener("click",function(){side_slide(-1)});
-            side_slide1 = document.getElementById("side_slide1");
-            side_slide1.addEventListener("click", function() {side_slide(1)});
-            
-            document.getElementById("name").innerHTML = title;
-            document.getElementById("description").innerHTML = description;
-            document.getElementById("type").innerHTML = type + " at " + mrt;
-            document.getElementById("address").innerHTML = address;
-            document.getElementById("transport").innerHTML = transport;
-            
-            var indexValue = 1;
-            showImg(indexValue);
-            function btm_slide(e){
-                showImg(indexValue = e);}
-            function side_slide(e){
-                showImg(indexValue += e);}
-            function showImg(e){
-            var i;
-            const img = document.querySelectorAll("img");
-            // console.log(img.length);
-            if(e > img.length){indexValue = 1}
-            if(e < 1){indexValue = img.length}
-            for(i = 0; i < img.length; i++){
-            img[i].style.display = "none"; 
-            }
-            for(i = 0; i < sliders.length; i++){
-            sliders[i].style.background = "white"; 
-            }
-            img[indexValue-1].style.display = "block";
-            sliders[indexValue-1].style.background = "black"; 
-            }
+    
+    var switchbutton = document.getElementById("signin");
+    var signout = document.getElementById("signout");
 
+    // 登出
+    signout.addEventListener("click", function(){
+    switchbutton.style.display = "inline";
+    signout.style.display = "none";
+    delete_user();
+    });
 
-            var button1 = document.getElementById("morning");
-            button1.addEventListener("click",function(){
-            var clear = document.getElementById("howmuch").innerHTML = "";
-            var money = document.getElementById("howmuch").innerHTML = "新台幣 2000 元";
-            });
+    // 上半天
+    var button1 = document.getElementById("morning");
+    button1.addEventListener("click",function(){
+    var clear = document.getElementById("howmuch").innerHTML = "";
+    var money = document.getElementById("howmuch").innerHTML = "新台幣 2000 元";
+    });
+
+    // 下半天
+    var button2 = document.getElementById("evening");
+    button2.addEventListener("click",function(){
+    var clear = document.getElementById("howmuch").innerHTML = "";
+    var money = document.getElementById("howmuch").innerHTML = "新台幣 2500 元";
+    }); 
+
+    // 選擇日期
+    var order_date = document.querySelector('input[type="date"]');
+    // var order_date = document.getElementById("order_date");
+
+    // var membersignup = document.getElementById("membersignup");
+    // membersignup.addEventListener("click", function(){
+    // usersign.style.display = "none";
+    // sign.style.display = "none";
+    // });
+
+    url = location.href;
+    url = url.split("/");
+    var id = url[4];
+
+    var currentPage = 0;
+    let result;
+    let data;
+    let bigbox;
+    let box;
+    let windowHeight;
+    var key_word = null;
+    var web;
+    
+
+    bigbox = document.createElement("div");
+    bigbox.className = "bigbox";
+    bigbox.id = "bigbox";
+    
+    
+    function researchData(id){
+        let src = "http://50.18.127.34:3000/api/attraction/"+id;
+        // console.log(src);
+        fetch(src).then(function(response){   
+            return response.json();
+        }
+        ).then(function(result){
+        getData(result);
+        // getuser()
+        });
+    }
+
+    researchData(id);
+
+    function getData(result){
         
-            var button2 = document.getElementById("evening");
-            button2.addEventListener("click",function(){
-            var clear = document.getElementById("howmuch").innerHTML = "";
-            var money = document.getElementById("howmuch").innerHTML = "新台幣 2500 元";
-            });  
-        };
+        // console.log(result.data);
+        let title = result.data.name;
+        let description = result.data.description;
+        let type = result.data.category;
+        let address = result.data.address;
+        let transport = result.data.transport;
+        let mrt = result.data.mrt;
+        web = result.data.images;
+
+        // 輪播照片
+        // var photo = document.getElementById("images");
+        for (let j = 0; j < web.length; j++){
+        var image = document.createElement("img");
+        image.src = web[j];
+        document.getElementById("images").appendChild(image);
+        }
         
-        function getuser(){
-            fetch("/api/user", {
-                headers: {
-                'content-type': 'application/json'}
+        // 輪播按鈕
+        for (let k = 1; k < web.length+1; k++){
+        let btmid = "btm"+k
+        var btm_slider = document.createElement("span");
+        btm_slider.id = btmid;
+        btm_slider.addEventListener("click", function(){btm_slide(k)});
+        var sliders = document.querySelectorAll(".btm_sliders span");
+
+        // var idgetclick = document.getElementById("btm"+k);
+        // console.log(idgetclick);
+        // idgetclick.addEventListener("click", btm_slide(k));
+        // btm_slider.onclickName = "btm_slide(j+1)";
+        // btm_slider.innerHTML = "DEMO";
+        document.getElementById("btm_sliders").appendChild(btm_slider);  
+        } 
+        
+        // 輪播左鍵右鍵
+        side_slide_1 = document.getElementById("side_slide_1");
+        side_slide_1.addEventListener("click",function(){side_slide(-1)});
+        side_slide1 = document.getElementById("side_slide1");
+        side_slide1.addEventListener("click", function() {side_slide(1)});
+        
+        // 訂購景點資訊
+        document.getElementById("name").innerHTML = title;
+        document.getElementById("description").innerHTML = description;
+        document.getElementById("type").innerHTML = type + " at " + mrt;
+        document.getElementById("address").innerHTML = address;
+        document.getElementById("transport").innerHTML = transport;
+        
+        // 輪播程式
+        var indexValue = 1;
+        showImg(indexValue);
+        function btm_slide(e){
+            showImg(indexValue = e);}
+        function side_slide(e){
+            showImg(indexValue += e);}
+        function showImg(e){
+        var i;
+        const img = document.querySelectorAll("img");
+        // console.log(img.length);
+        if(e > img.length){indexValue = 1}
+        if(e < 1){indexValue = img.length}
+        for(i = 0; i < img.length; i++){
+        img[i].style.display = "none"; 
+        }
+        for(i = 0; i < sliders.length; i++){
+        sliders[i].style.background = "white"; 
+        }
+        img[indexValue-1].style.display = "block";
+        sliders[indexValue-1].style.background = "black"; 
+        }
+
+
+         
+    };
+    var order_detail;
+    var order_money;
+    var order_day;
+    var signinmember;
+    var order_time;
+
+    // 開始預定行程
+    var booking_button = document.getElementById("booking_button");
+    console.log(booking_button);
+    booking_button.addEventListener("click", function(){
+        
+        fetch("/api/user", {
+            headers: {
+            'content-type': 'application/json'}
         })
         .then(response => response.json(data))
         .then((data) => {
             console.log(data);
-            if (data["data"]) {
-                switchbutton.style.display = "none";
-                signout.style.display = "inline";
-        // //         // switchbutton.innerHTML = "";
-        // //         // switchbutton.innerHTML = "登出";
-            }
-            // else{
-            //     switchbutton.style.display = "inline";
-            //     signout.style.display = "none";
-            // } 
+        if (data["data"]){
+            switchbutton.style.display = "none";
+            signout.style.display = "inline";
+            order_spot()
+        }else{
+            sign.style.display = "block";
+            // gray.style.display = "block"
+
+        }
+    })
+        });
+
+
+    function order_spot(){
+        var order_email = signinmember["data"]["email"];
+        var order_name = signinmember["data"]["name"];
+
+        if(button1.checked){
+            order_money = button1.value;
+            order_time = "morning";
+        }else if(button2.checked){
+            order_money = button2.value;
+            order_time = "afternoon"
+        // }else{
+        //     order_money = button2.value;
+        }
+        order_day = order_date.value
+        console.log(order_email);
+        console.log(order_money);
+        console.log(order_day);
+        console.log(id);
+        order_detail = {"attraction_id":id, "date": order_day, "price": order_money, "time": order_time, "email": order_email, "name": order_name};
+        create_order("/api/booking", order_detail);
+    };
+
+
+    function create_order(url, data){
+        fetch(url,{
+            headers: {
+                'content-type': 'application/json'},
+            body: JSON.stringify(data), 
+            method:("POST")
+        })
+        .then(response => response.json(data))
+        .then((data) => {
+            console.log(data);
+            // check_order()
+            if(data["ok"]){
+                window.location.href = "/booking"
+            };
+
+        })
+    };
+    
+    // var ordermember;
+    // function check_order(){
+    //     fetch("/api/booking", {
+    //         headers:{
+    //             'content-type': 'application/json'}
+    //     })
+    //     .then(response => response.json(data))
+    //     .then((data) =>{
+    //         console.log(data);
+    //         ordermember = data;
+    //     }
+    //     )
+    // }
+
+    var signinmember;
+
+    function getuser(){
+        fetch("/api/user", {
+            headers: {
+            'content-type': 'application/json'}
+        })
+        .then(response => response.json(data))
+        .then((data) => {
+        console.log(data);
+        signinmember = data;
+        if (data["data"]) {
+            switchbutton.style.display = "none";
+            signout.style.display = "inline";
+    // //         // switchbutton.innerHTML = "";
+    // //         // switchbutton.innerHTML = "登出";
+        }
+        // else{
+        //     switchbutton.style.display = "inline";
+        //     signout.style.display = "none";
+        // } 
+        return signinmember;
         })
         };
-
-        function delete_user(){
-            fetch("/api/user",{
-                headers:{
-                'content-type': 'application/json'},
-                // body: JSON.stringify(data), 
-                method:("DELETE")
-            })
-            console.log(data);
-            // getuser();
+    
+    function delete_user(){
+        fetch("/api/user",{
+            headers:{
+            'content-type': 'application/json'},
+            // body: JSON.stringify(data), 
+            method:("DELETE")
+        })
+        // console.log(data);
+        // getuser();
         };
-        
-        function signup_postData (url, data){
+    
+    function signup_postData (url, data){
         fetch(url, {
             headers: {'content-type': 'application/json'},
             body: JSON.stringify(data), 
@@ -311,38 +475,44 @@
         })
         };
 
-        function signin_patchData (url, data){
-            fetch(url, {
-                headers: {
-                    'content-type': 'application/json'},
-                body: JSON.stringify(data), method:("PATCH")
-            })
-            .then(response => response.json(data))
-            // .then((data) => )
-            .then((data) => {
-            console.log(data)
-            if (data["ok"]) {
-                getuser()
-                switchbutton.style.display = "none";
-                signout.style.display = "inline";
-                // switchbutton.innerHTML = "";
-                // switchbutton.innerHTML = "登出";
-            } 
-            // else {
-            // switchbutton.style.display = "inline";
-            // signout.style.display = "none";
-            // }
-            })
+
+    function signin_patchData (url, data){
+        fetch(url, {
+            headers: {
+                'content-type': 'application/json'},
+            body: JSON.stringify(data), method:("PATCH")
+        })
+        .then(response => response.json(data))
+        // .then((data) => )
+        .then((data) => {
+        // console.log(data)
+        if (data["ok"]) {
+            getuser()
+            switchbutton.style.display = "none";
+            signout.style.display = "inline";
+            // signinerror.style.display = "none";
+
+            // switchbutton.innerHTML = "";
+            // switchbutton.innerHTML = "登出";
+        } 
+        // else {
+        //     signinerror.style.display = "block";
+        // switchbutton.style.display = "inline";
+        // signout.style.display = "none";
+        // }
+        })
         };
 
-        
-       
-        var membersignup = document.getElementById("membersignup");
-        membersignup.addEventListener("click", function(event){
+    
+    
+    var membersignup = document.getElementById("membersignup");
+    membersignup.addEventListener("click", function(event){
         event.preventDefault()
         usersign.style.display = "none";
-        var signupname =document.getElementById("signupname").value;
-        var signupemail =document.getElementById("signupemail").value;
+        gray.style.display = "none"
+
+        var signupname = document.getElementById("signupname").value;
+        var signupemail = document.getElementById("signupemail").value;
         var signuppassword = document.getElementById("signuppassword").value;
         console.log(signupemail);
         console.log("signupemail");
@@ -352,10 +522,11 @@
 
         });
 
-        var membersignin = document.getElementById("membersignin");
-        membersignin.addEventListener("click", function(event){
+    var membersignin = document.getElementById("membersignin");
+    membersignin.addEventListener("click", function(event){
         event.preventDefault()
         sign.style.display = "none";
+        gray.style.display = "none"
         var signinemail =document.getElementById("signinemail").value;
         var signinpassword = document.getElementById("signinpassword").value;
         console.log(signinpassword);
@@ -368,56 +539,56 @@
 
 
 
-        // function getlove(){
-        // var dataUrl= "/api/user"
-        // var xhr = new XMLHttpRequest()
-        // xhr.open('PATCH',dataUrl, true)
-        // xhr.send()
-        // xhr.onload = function(){
-        // var data2 = JSON.parse(this.responseText);
-        // console.log(data2);
-        // }};
+    // function getlove(){
+    // var dataUrl= "/api/user"
+    // var xhr = new XMLHttpRequest()
+    // xhr.open('PATCH',dataUrl, true)
+    // xhr.send()
+    // xhr.onload = function(){
+    // var data2 = JSON.parse(this.responseText);
+    // console.log(data2);
+    // }};
 
 
 
-        // function get(data1){
-        // console.log(data1);
-        // var xhr = new XMLHttpRequest();
-        // xhr.open("PATCH", "/api/user", true); //post 告知後端
-        // xhr.setRequestHeader("Content-type", "application/json"); //告訴後端是用 JSON 格式
-        // var data2 = JSON.stringify(data1); //將物件資料轉成字串
-        // xhr.send(data2);} //送出字串
+    // function get(data1){
+    // console.log(data1);
+    // var xhr = new XMLHttpRequest();
+    // xhr.open("PATCH", "/api/user", true); //post 告知後端
+    // xhr.setRequestHeader("Content-type", "application/json"); //告訴後端是用 JSON 格式
+    // var data2 = JSON.stringify(data1); //將物件資料轉成字串
+    // xhr.send(data2);} //送出字串
 
-        // function login() {
-        // var email =document.getElementById("email").value;
-        // var password = document.getElementById("password").value;
-        // var xmlhttp;
-        // xmlhttp.open("PATCH","/api/user",true);
-        // xmlhttp.setRequestHeader("Content-type","application/json");
-        // // 後面這兩部很重要，我看網上很多都是使用xmlhttp.send("username=" username "&password=" "),這樣接收還要解析一番感覺還是直接傳送以下格式的好些
-        // var data = {
-        // "email": email,
-        // "password": password
-        // };
-        // var data_json = JSON.stringify(data);
-        // xmlhttp.send(data_json);
-        // }
+    // function login() {
+    // var email =document.getElementById("email").value;
+    // var password = document.getElementById("password").value;
+    // var xmlhttp;
+    // xmlhttp.open("PATCH","/api/user",true);
+    // xmlhttp.setRequestHeader("Content-type","application/json");
+    // // 後面這兩部很重要，我看網上很多都是使用xmlhttp.send("username=" username "&password=" "),這樣接收還要解析一番感覺還是直接傳送以下格式的好些
+    // var data = {
+    // "email": email,
+    // "password": password
+    // };
+    // var data_json = JSON.stringify(data);
+    // xmlhttp.send(data_json);
+    // }
 
-        
-        // function enroll(){
-        //     var email_value = document.getElementById("email").value;
-        //     var password_value = document.getElementById("password").value;
-        //     var data;
-        //     data[email] = email_value;
-        //     data[password] = password_value;
-        //     fetch("/api/user").then(function(response){
-        //         return response.json();
-        //     }).then(function(myJosn){
-        //         console.log(myJson.data)
-        //     });
-        // };
+    
+    // function enroll(){
+    //     var email_value = document.getElementById("email").value;
+    //     var password_value = document.getElementById("password").value;
+    //     var data;
+    //     data[email] = email_value;
+    //     data[password] = password_value;
+    //     fetch("/api/user").then(function(response){
+    //         return response.json();
+    //     }).then(function(myJosn){
+    //         console.log(myJson.data)
+    //     });
+    // };
 
-    </script>
+</script>
     
 </body>
 

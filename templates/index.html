@@ -29,6 +29,7 @@
 </head>
 
 <body>
+<div id = "gray" class = "gray" ></div>
     <div class = "nav1">
         <div class = "div1">
             <span id = "taipei" class = "title1 Cyan700" >台北一日遊</span>
@@ -36,6 +37,7 @@
                 <button id = "booking" class = "button1">預定行程</button>
                 <button id = "signin" class = "button1">登入/註冊</button>
                 <button  id = "signout" class = "button1-1"  >登出</button>
+                <!-- <div id = "error" class = "error" > 信箱或密碼輸入錯誤</div> -->
                 <ul  action ="/api/user" id = "sign" class = "sign" method = "PATCH">
                     <div class="arow" ></div>
                     登入會員帳號
@@ -69,7 +71,7 @@
     </div>
     <main id = "content"></main>
     <footer class = "footer" > COPYRIGHT©2021台北一日遊</footer>
-    
+
 <script>
     getuser()
 
@@ -78,54 +80,89 @@
     var usersign;
     var switchbutton;
     var signout;
+    var gray;
     window.onload = function(){
     sign = document.getElementById("sign");
     usersign = document.getElementById("usersign");
     switchbutton = document.getElementById("signin");
     signout = document.getElementById("signout");
+    gray = document.getElementById("gray");
     };
 
+    // 台北一日遊首頁
     var taipei = document.getElementById("taipei");
     taipei.addEventListener("click", function(){
     location.href = "/";
     });
 
+    //登入／註冊
     var signin = document.getElementById("signin");
     signin.addEventListener("click", function(){
     sign.style.display = "block";
     usersign.style.display = "none";
-
+    gray.style.display = "block"
     });
+
+    // 預定行程
+    var booking = document.getElementById("booking");
+    booking.addEventListener("click", function(){
+        fetch("/api/user", {
+            headers: {
+            'content-type': 'application/json'}
+        })
+        .then(response => response.json(data))
+        .then((data) => {
+        console.log(data);
+        signinmember = data;
+        if (data["data"]) {
+            window.location.href = "/booking"
+
+        }else{
+            sign.style.display = "block";
+        }
+    })
+})
+
+    // 關閉登入視窗
     var closebox = document.getElementById("close");
     closebox.addEventListener("click", function(){
     sign.style.display = "none";
     usersign.style.display = "none";
+    gray.style.display = "none"
     });
     
+    // 登入切換到註冊
     var signup = document.getElementById("signup");
     signup.addEventListener("click", function(){
     sign.style.display = "none";
     usersign.style.display = "block";
+    gray.style.display = "block"
     });
 
+    // 關閉註冊視窗
     var close2 = document.getElementById("closed");
     close2.addEventListener("click", function(){
     sign.style.display = "none";
     usersign.style.display = "none";
+    gray.style.display = "none"
     });
 
+    // 會員註冊
     var usersignin = document.getElementById("usersignin");
     usersignin.addEventListener("click", function(){
-    usersign.style.display = "none";
     sign.style.display = "block";
+    usersign.style.display = "none";
+    gray.style.display = "block"
     });
 
     var switchbutton = document.getElementById("signin");
     var signout = document.getElementById("signout");
 
+    // 登出
     signout.addEventListener("click", function(){
     switchbutton.style.display = "inline";
     signout.style.display = "none";
+    gray.style.display = "none"
     delete_user();
     });
 
@@ -152,7 +189,7 @@
         {   
             // console.log(response);
             // console.log(src);
-            return response.json();
+        return response.json();
         }
         ).then(function(result)
         {
@@ -173,7 +210,7 @@
 
     researchData(key_word);
 
-
+    // 觸發滾輪
     window.addEventListener ('scroll', function()
     {
   
@@ -182,9 +219,9 @@
     }
     });
 
+    // 景點搜尋
     var btn = document.getElementById("search");
-    console.log(btn);
-
+    // console.log(btn);
     btn.addEventListener('click', function()
     {
     var clear = document.getElementById("bigbox").innerHTML = "";
@@ -210,9 +247,8 @@
 
     function getData(result){
         
-
         var datalength = result.data.length;
-        console.log(datalength);
+        // console.log(datalength);
 
         if(datalength==0){
             document.getElementById("bigbox").innerHTML = "查無景點資料";
@@ -275,17 +311,14 @@
         titlename2.appendChild(mrtname);
         titlename2.appendChild(typename);
         // titlename2.appendChild(idnumber);
-        
-        
-        
-        // box.addEventListener("click", function(){
-            
+        // box.addEventListener("click", function(){      
         // })
 
     };
     var content = document.getElementById("content").appendChild(bigbox);
-    }
-    }
+    }}
+
+
     function getuser(){
         fetch("/api/user", {
             headers: {
@@ -297,7 +330,6 @@
             switchbutton.style.display = "none";
             signout.style.display = "inline";
         }
-       
     })
     };
 
@@ -324,6 +356,8 @@
         })
     };
 
+    // var error = document.getElementById("error");
+
 
     function signin_patchData (url, data){
         fetch(url, {
@@ -339,19 +373,24 @@
             // document.querySelector(".button1").style.display = "none"
             switchbutton.style.display = "none";
             signout.style.display = "inline";
+            // error.style.display = "none";
+
             // switchbutton.innerHTML = "";
             // switchbutton.innerHTML = "登出";
         } 
-        // else 
-        // // error 處理~~
+        // else {
+        //     error.style.display = "block";
+
         // }
         })
     };
 
+    // 使用者註冊
     var membersignup = document.getElementById("membersignup");
     membersignup.addEventListener("click", function(event){
     event.preventDefault()
     usersign.style.display = "none";
+    gray.style.display = "none"
     var signupname =document.getElementById("signupname").value;
     var signupemail =document.getElementById("signupemail").value;
     var signuppassword = document.getElementById("signuppassword").value;
@@ -363,10 +402,13 @@
 
     });
 
+    // 使用者登入
     var membersignin = document.getElementById("membersignin");
     membersignin.addEventListener("click", function(event){
     event.preventDefault()
     sign.style.display = "none";
+    gray.style.display = "none"
+
     var signinemail =document.getElementById("signinemail").value;
     var signinpassword = document.getElementById("signinpassword").value;
     console.log(signinpassword);
